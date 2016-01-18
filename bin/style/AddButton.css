@@ -1,0 +1,15 @@
+.button{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 15px; 
+    -fx-padding: 0px;
+    -fx-background-image: url("../icon/add_black32.png");
+}
+
+.button:hover{
+    -fx-background-color: none;
+    -fx-background-image: url("../icon/add_red32.png");
+}
+.button:focused{
+    -fx-background-color: none;
+}

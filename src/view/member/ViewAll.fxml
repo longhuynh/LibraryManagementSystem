@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="604.0" prefWidth="877.0" stylesheets="/style/MainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.member.ViewMemberController">
+	<children>
+		<BorderPane layoutX="294.0" layoutY="147.0" prefHeight="604.0" prefWidth="877.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<left>
+				<BorderPane prefHeight="604.0" prefWidth="214.0" BorderPane.alignment="CENTER">
+					<top>
+						<TextField fx:id="txtSearch" onAction="#onActionSearch" prefHeight="38.0" prefWidth="214.0" promptText="Search member" BorderPane.alignment="CENTER" />
+					</top>
+					<center>
+						<TableView fx:id="tblMemberList" onKeyReleased="#onClickTableMember" onMouseClicked="#tblEmloyeOnClick" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+							<columns>
+								<TableColumn fx:id="clmEmployeId" prefWidth="75.0" text="ID" visible="false" />
+								<TableColumn fx:id="clmEmployeName" prefWidth="138.0" text="Member list" />
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+					</center>
+				</BorderPane>
+			</left>
+			<center>
+				<HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+					<children>
+						<VBox alignment="CENTER" prefHeight="604.0" prefWidth="590.0">
+							<children>
+								<GridPane prefHeight="480.0" prefWidth="480.0">
+									<children>
+										<Label text="Member Id:" />
+										<Label text="First Name:" GridPane.rowIndex="2" />
+										<Label text="Last Name:" GridPane.rowIndex="4" />
+										<Label text="Phone Number :" GridPane.rowIndex="6" />
+										<Label text="Street:" GridPane.columnIndex="3" />
+										<Label text="City:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+										<TextField fx:id="txtMemberId" disable="true" editable="false" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+										<TextField fx:id="txtFirstName" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+										<TextField fx:id="txtLastName" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+										<TextField fx:id="txtPhoneNumber" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+										<TextField fx:id="txtStreet" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+										<TextField fx:id="txtCity" editable="false" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+										
+										<Button fx:id="btnClearFirstName" layoutX="167.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" stylesheets="@../../../style/btnOnText.css" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+										<Button fx:id="btnClearLastName" layoutX="10.0" layoutY="103.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" stylesheets="@../../../style/btnOnText.css" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+										<Button fx:id="btnClearPhoneNumber" layoutX="10.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" stylesheets="@../../../style/btnOnText.css" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+										<Button fx:id="btnClearStreet" layoutX="10.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" stylesheets="@../../../style/btnOnText.css" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+										<Button fx:id="btnClearCity" layoutX="10.0" layoutY="283.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" stylesheets="@../../../style/btnOnText.css" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="12" GridPane.rowSpan="3">
+											<children>
+												<Button fx:id="btnUpdate" layoutX="140.0" layoutY="31.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="79.0" text="Update" />
+											</children>
+										</AnchorPane>
+										<Label text="Status" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+										<CheckBox fx:id="cbStatus" mnemonicParsing="false" onAction="#cbOnAction" text="Active" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                              <Label text="State:" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                              <Label text="Zip code:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+									</children>
+									<columnConstraints>
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+									</columnConstraints>
+									<rowConstraints>
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+									</rowConstraints>
+								</GridPane>
+							</children>
+						</VBox>
+					</children>
+				</HBox>
+			</center>
+		</BorderPane>
+	</children>
+</AnchorPane>
