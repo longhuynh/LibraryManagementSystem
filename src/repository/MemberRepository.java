@@ -42,12 +42,5 @@ public class MemberRepository implements IBaseRepository<LibraryMember> {
 		members = new HashMap<String, LibraryMember>();
 		list.forEach(member -> members.put(member.getMemberId(), member));
 		DataAccess.saveToStorage(StorageType.MEMBERS, members);
-	}
-	
-	public LibraryMember login(String memberId, String password) {
-		LibraryMember member = findBy(memberId);
-		if(member != null && member.getPassword().equals(password)) 
-			return member;
-		return null;
 	}	
 }

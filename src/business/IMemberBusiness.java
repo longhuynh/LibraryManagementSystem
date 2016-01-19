@@ -1,6 +1,5 @@
 package business;
 
-import java.util.HashMap;
 import java.util.List;
 
 import model.Address;
@@ -9,9 +8,7 @@ import model.Role;
 import util.LibrarySystemException;
 
 public interface IMemberBusiness {
-	public List<LibraryMember> getAll() ;
-	
-	public LibraryMember login(String memberId,String password) throws LibrarySystemException;
+	public List<LibraryMember> getAll();
 	
 	public void addNewMember(String memberId, String firstName, String lastName,
 			String telNumber, Address address, Role role) throws LibrarySystemException;

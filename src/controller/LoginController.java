@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import business.MemberBusiness;
+import business.UserBusineess;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.LibraryMember;
+import model.User;
 import javafx.scene.image.Image;
 
 /**
@@ -76,18 +78,18 @@ public class LoginController implements Initializable {
            try {      
         	   String memberId = txtUserName.getText();
         	   String password = pwfUserPassword.getText();
-        	   MemberBusiness memberBusiness = new MemberBusiness();
-        	   LibraryMember member = memberBusiness.login(memberId, password);
-        	   if(member != null){        	   
+        	   UserBusineess userBusiness = new UserBusineess();
+        	   User user = userBusiness.login(memberId, password);
+        	   if(user != null){        	   
 	        	   ApplicationController controller = new ApplicationController();
 	        	   controller = loader.getController();               
 	        	   controller.onClickHomeButton(event);
-	        	   controller.setPermission(member.getRole());
-	        	   controller.viewDetails(member);
+	        	   controller.setPermission(user.getRole());
+	        	   controller.viewDetails(user);
 	        	   
 	               adminPanelStage.setScene(adminPanelScene);
 	               adminPanelStage.getIcons().add(new Image("/image/icon.png"));
-	               adminPanelStage.setTitle("Welcome [" + member.getFullName() + "] to Library Management System");
+	               adminPanelStage.setTitle("Welcome [" + user.getId() + "] to Library Management System");
 	               adminPanelStage.show();
 	
 	               Stage stage = (Stage) btnLogin.getScene().getWindow();

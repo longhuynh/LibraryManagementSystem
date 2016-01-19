@@ -165,8 +165,6 @@ AnchorPane{
     -fx-background-radius: 0px;
     -fx-padding: 5;
     -fx-font-size: 15px; 
-    -fx-min-height: 20px;
-    -fx-max-height: 20px;
 }
 
 /*******************************************************************************

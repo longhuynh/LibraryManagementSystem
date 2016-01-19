@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.LibraryMember;
 import model.Role;
+import model.User;
 
 
 /**
@@ -265,12 +266,12 @@ public class ApplicationController implements Initializable {
         btnAbout.setStyle(activeStyle);
     }
 
-    public void viewDetails(LibraryMember member) {
+    public void viewDetails(User user) {
     	Image image = new Image("/image/1001.jpg");
         circleImgUser.setFill(new ImagePattern(image));
         imgUserTop.setFill(new ImagePattern(image));
-        lblFullName.setText(member.getFullName());
-        lblUserName.setText(member.getFullName());
-        lblRoleAs.setText("Role: " + member.getRole());
+        lblFullName.setText(user.getUserName());
+        lblUserName.setText(user.getUserName());
+        lblRoleAs.setText("Role: " + user.getRole());
     }
 }

@@ -1,5 +1,5 @@
 package model;
 
 public enum StorageType {
-	BOOKS, MEMBERS;
+	BOOKS, MEMBERS, USERS;
 }

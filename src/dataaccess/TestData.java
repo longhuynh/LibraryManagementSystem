@@ -11,8 +11,10 @@ import model.CheckoutRecord;
 import model.CheckoutRecordEntry;
 import model.LibraryMember;
 import model.Role;
+import model.User;
 import repository.BookRepository;
 import repository.MemberRepository;
+import repository.UserRepository;
 
 public class TestData {
 	List<LibraryMember> members = new ArrayList<LibraryMember>();
@@ -52,6 +54,7 @@ public class TestData {
 		}
 	};
 	
+	
 	@SuppressWarnings("serial")
 	List<CheckoutRecordEntry> checkoutRecordEntries = new ArrayList<CheckoutRecordEntry>() {
 		{
@@ -63,6 +66,14 @@ public class TestData {
 				books.get(1).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
 			add(new CheckoutRecordEntry(
 				books.get(2).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));			
+		}
+	};
+	
+	List<User> users = new ArrayList<User>() {
+		{
+			add(new User("long", "Long Huynh", "123", Role.BOTH));
+			add(new User("achyut",  "AChyut", "123", Role.ADMIN));
+			add(new User("amit", "Amit", "123", Role.LIBRARIAN));
 		}
 	};
 	
@@ -79,6 +90,11 @@ public class TestData {
 		}
 	};
 
+	public void generateUserData() {
+		UserRepository repository = new UserRepository();
+		repository.loadEntityMap(users);	
+	}
+	
 	public void generateBookData() {
 		books.get(0).addCopy();
 		books.get(0).addCopy();
@@ -89,22 +105,22 @@ public class TestData {
 	}
 
 	public void generateLibraryMemberData() {
-		LibraryMember libraryMember = new LibraryMember("1001", "Long", "Huynh", "641-123-4567", addresses.get(0), Role.BOTH);
+		LibraryMember libraryMember = new LibraryMember("1001", "Long", "Huynh", "641-123-4567", addresses.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1002", "Achyut", "Devkota", "702-998-2414", addresses.get(5), Role.ADMIN);
+		libraryMember = new LibraryMember("1002", "Achyut", "Devkota", "702-998-2414", addresses.get(5));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(2));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1003", "Amit", "Niroula", "451-234-8811", addresses.get(6), Role.LIBRARIAN);
+		libraryMember = new LibraryMember("1003", "Amit", "Niroula", "451-234-8811", addresses.get(6));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1004", "Sarah", "Obama", "451-234-8811", addresses.get(1), Role.LIBRARIAN);
+		libraryMember = new LibraryMember("1004", "Sarah", "Obama", "451-234-8811", addresses.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		members.add(libraryMember);
@@ -118,6 +134,7 @@ public class TestData {
 		System.out.println("Initialize data ...");
 		testData.generateBookData();
 		testData.generateLibraryMemberData();	
+		testData.generateUserData();
 		System.out.println("Finish ...");
 	}
 }

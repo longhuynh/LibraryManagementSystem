@@ -50,3 +50,4 @@ bin/controller/MemberController.class
 *.class
 bin/controller/ApplicationController.class
 *.class
+bin/style/MainStyle.css

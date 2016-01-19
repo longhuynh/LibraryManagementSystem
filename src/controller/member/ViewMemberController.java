@@ -140,9 +140,10 @@ public class ViewMemberController implements Initializable {
 		txtMemberId.clear();
 		txtFirstName.clear();
 		txtLastName.clear();
+		txtPhoneNumber.clear();
 		txtStreet.clear();
 		txtLastName.clear();
 		txtCity.clear();
-		txtPhoneNumber.clear();
+		
 	}
 }
