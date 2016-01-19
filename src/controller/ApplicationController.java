@@ -27,6 +27,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.LibraryMember;
+import model.Role;
+import util.StringHelper;
 
 
 /**
@@ -64,11 +67,11 @@ public class ApplicationController implements Initializable {
     private ImageView imgHomeButton;
 
     @FXML
-    private Button btnEmplopye;
+    private Button btnMember;
     @FXML
     private ImageView imgEmployeBtn;
     @FXML
-    private Button btnSell;
+    private Button btnBook;
     @FXML
     private ImageView imgSellBtn;
     @FXML
@@ -77,8 +80,7 @@ public class ApplicationController implements Initializable {
     private ImageView imgAboutBtn;
     @FXML
     private Label lblUserName;
-    @FXML
-    private Label lblUserNamePopOver;
+ 
     @FXML
     private Label lblFullName;
     @FXML
@@ -87,7 +89,7 @@ public class ApplicationController implements Initializable {
     @FXML
     private Circle imgUserTop;
     @FXML
-    private Circle circleImgUsr;
+    private Circle circleImgUser;
     @FXML
     private Label lblUserId;
 
@@ -111,7 +113,7 @@ public class ApplicationController implements Initializable {
         imgMenuBtn.setImage(menuImage);
         Image userImage = new Image("/image/user.png");
         imgUserTop.setFill(new ImagePattern(userImage));
-        circleImgUsr.setFill(new ImagePattern(userImage));
+        circleImgUser.setFill(new ImagePattern(userImage));
     }
 
     @FXML
@@ -192,7 +194,7 @@ public class ApplicationController implements Initializable {
     }
 
     @FXML
-    private void btnSellOnClick(ActionEvent event) {
+    private void onClickButtonBook(ActionEvent event) {
         sellActive();     
         
         try {
@@ -209,19 +211,15 @@ public class ApplicationController implements Initializable {
         }
     }
 
-    public void setPermission() {
+    public void setPermission(Role role) {
+        if (Role.LIBRARIAN.equals(role)) {
+            btnMember.setDisable(true);
+        }
+        if (Role.ADMIN.equals(role)) {
+            btnBook.setDisable(true);
+        } else {
 
-
-//                if (rs.getInt(17) == 0) {
-//                    btnEmplopye.setDisable(true);
-//                }
-//                if (rs.getInt(15) == 0) {
-//                    btnSell.setDisable(true);
-//                } else {
-//
-//                }
-
-       
+        }       
     }
 
     private void activeHomeButton() {
@@ -230,8 +228,8 @@ public class ApplicationController implements Initializable {
         imgEmployeBtn.setImage(member); 
         imgAboutBtn.setImage(about);
         btnHome.setStyle(activeStyle);       
-        btnSell.setStyle(defultStyle);
-        btnEmplopye.setStyle(defultStyle);        
+        btnBook.setStyle(defultStyle);
+        btnMember.setStyle(defultStyle);        
         btnAbout.setStyle(defultStyle);
     }
 
@@ -241,8 +239,8 @@ public class ApplicationController implements Initializable {
         imgEmployeBtn.setImage(member);      
         imgAboutBtn.setImage(about);
         btnHome.setStyle(defultStyle);       
-        btnSell.setStyle(activeStyle);
-        btnEmplopye.setStyle(defultStyle);      
+        btnBook.setStyle(activeStyle);
+        btnMember.setStyle(defultStyle);      
         btnAbout.setStyle(defultStyle);
     }
 
@@ -252,8 +250,8 @@ public class ApplicationController implements Initializable {
         imgEmployeBtn.setImage(memberRed);        
         imgAboutBtn.setImage(about);
         btnHome.setStyle(defultStyle);       
-        btnSell.setStyle(defultStyle);
-        btnEmplopye.setStyle(activeStyle);      
+        btnBook.setStyle(defultStyle);
+        btnMember.setStyle(activeStyle);      
         btnAbout.setStyle(defultStyle);
     }
    
@@ -263,18 +261,17 @@ public class ApplicationController implements Initializable {
         imgEmployeBtn.setImage(member);       
         imgAboutBtn.setImage(aboutRed);
         btnHome.setStyle(defultStyle);      
-        btnSell.setStyle(defultStyle);
-        btnEmplopye.setStyle(defultStyle);        
+        btnBook.setStyle(defultStyle);
+        btnMember.setStyle(defultStyle);        
         btnAbout.setStyle(activeStyle);
     }
 
-    public void viewDetails() {
-//        users.id = id;
-//        usersGetway.selectedView(users);
-//        image = users.image;
-//        circleImgUsr.setFill(new ImagePattern(image));
-//        imgUsrTop.setFill(new ImagePattern(image));
-//        lblFullName.setText(users.fullName);
-//        lblUsrNamePopOver.setText(users.userName);
+    public void viewDetails(LibraryMember member) {
+    	Image image = new Image("/image/1001.jpg");
+        circleImgUser.setFill(new ImagePattern(image));
+        imgUserTop.setFill(new ImagePattern(image));
+        lblFullName.setText(member.getFullName());
+        lblUserName.setText(member.getFullName());
+        lblRoleAs.setText(StringHelper.toDisplayCase(member.getRole().toString()));
     }
 }

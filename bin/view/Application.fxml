@@ -53,8 +53,8 @@
 													</graphic>
 												</Button>												
 
-												<Button fx:id="btnSell" contentDisplay="TOP" layoutY="133.0"
-													mnemonicParsing="false" onAction="#btnSellOnClick"
+												<Button fx:id="btnBook" contentDisplay="TOP" layoutY="133.0"
+													mnemonicParsing="false" onAction="#onClickButtonBook"
 													prefHeight="78.0" prefWidth="127.0" text="Books">
 													<graphic>
 														<ImageView fx:id="imgSellBtn" fitHeight="40.0"
@@ -66,7 +66,7 @@
 													</graphic>
 												</Button>
 												
-												<Button fx:id="btnEmplopye" contentDisplay="TOP"
+												<Button fx:id="btnMember" contentDisplay="TOP"
 													layoutY="225.0" mnemonicParsing="false" onAction="#onClickMemberButton"
 													prefHeight="78.0" prefWidth="127.0" text="Members">
 													<graphic>
@@ -140,22 +140,19 @@
 																			<graphic>
 																				<AnchorPane prefHeight="225.0" prefWidth="190.0">
 																					<children>
-																						<Circle fx:id="circleImgUsr" fill="DODGERBLUE"
+																						<Circle fx:id="circleImgUser" fill="DODGERBLUE"
 																							layoutX="100.0" layoutY="49.0" radius="46.0"
-																							stroke="BLACK" strokeType="INSIDE" />
-																						<Label fx:id="lblUserNamePopOver" alignment="CENTER"
-																							layoutY="107.0" prefHeight="15.0" prefWidth="196.0"
-																							text="UserName" />
+																							stroke="BLACK" strokeType="INSIDE" />																						
 																						<Label fx:id="lblFullName" alignment="CENTER"
-																							layoutX="2.0" layoutY="129.0" prefHeight="15.0"
+																							layoutX="2.0" layoutY="107.0" prefHeight="15.0"
 																							prefWidth="196.0" text="Full Name" />
 																						<Label fx:id="lblRoleAs" alignment="CENTER"
-																							layoutX="3.0" layoutY="148.0" prefHeight="15.0"
+																							layoutX="3.0" layoutY="129.0" prefHeight="15.0"
 																							prefWidth="196.0" text="Role" />
 																						
 																						<Button fx:id="btnLogOut" layoutX="3.0"
 																							layoutY="184.0" mnemonicParsing="false" onAction="#btnLogOut"
-																							prefHeight="40.0" prefWidth="196.0" text="logOut" />
+																							prefHeight="40.0" prefWidth="196.0" text="Log Out" />
 																					</children>
 																				</AnchorPane>
 																			</graphic>
@@ -168,7 +165,7 @@
 																					layoutX="26.0" layoutY="24.0" radius="16.0" stroke="BLACK"
 																					strokeType="INSIDE" />
 																				<Label fx:id="lblUserName" layoutX="52.0"
-																					layoutY="17.0" text="User name" />
+																					layoutY="17.0" text="User Name" />
 																			</children>
 																		</AnchorPane>
 																	</graphic>

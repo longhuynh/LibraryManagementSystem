@@ -12,6 +12,8 @@ import custom.CustomPasswordField;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import business.MemberBusiness;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+import model.LibraryMember;
 import javafx.scene.image.Image;
 
 /**
@@ -30,6 +32,8 @@ import javafx.scene.image.Image;
  */
 
 public class LoginController implements Initializable {
+	private static final Logger logger = Logger.getLogger(LoginController.class.getName());
+	
     @FXML
     private TextField txtUserName;
     @FXML
@@ -60,8 +64,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private void onClickButtonLogin(ActionEvent event) throws IOException {
-      
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/Application.fxml"));
         loader.load();
@@ -71,25 +73,33 @@ public class LoginController implements Initializable {
         adminPanelStage.setMaximized(true);
 
         if (isValidCondition()) {
-           try {         
-        	   ApplicationController controller = new ApplicationController();
-        	   controller = loader.getController();               
-        	   controller.onClickHomeButton(event);
-        	   controller.setPermission();
-        	   controller.viewDetails();
-        	   
-               adminPanelStage.setScene(adminPanelScene);
-               adminPanelStage.getIcons().add(new Image("/image/icon.png"));
-               adminPanelStage.setTitle("Long Huynh");
-               adminPanelStage.show();
-
-               Stage stage = (Stage) btnLogin.getScene().getWindow();
-               stage.close();
-               System.out.println("Now you ready to go to Admin Panel");
+           try {      
+        	   String memberId = txtUserName.getText();
+        	   String password = pwfUserPassword.getText();
+        	   MemberBusiness memberBusiness = new MemberBusiness();
+        	   LibraryMember member = memberBusiness.login(memberId, password);
+        	   if(member != null){        	   
+	        	   ApplicationController controller = new ApplicationController();
+	        	   controller = loader.getController();               
+	        	   controller.onClickHomeButton(event);
+	        	   controller.setPermission(member.getRole());
+	        	   controller.viewDetails(member);
+	        	   
+	               adminPanelStage.setScene(adminPanelScene);
+	               adminPanelStage.getIcons().add(new Image("/image/icon.jpg"));
+	               adminPanelStage.setTitle("Welcome [" + member.getFullName() + "] to Library Management System");
+	               adminPanelStage.show();
+	
+	               Stage stage = (Stage) btnLogin.getScene().getWindow();
+	               stage.close();
+               }
+        	   else{
+        		   Dialog.showErrorDialog("Login failed", null, "Please check your user name or password.");
+        	   }
                return;    
                     
            } catch (Exception ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                logger.log(Level.SEVERE, null, ex);
             }
 
         }
@@ -105,7 +115,7 @@ public class LoginController implements Initializable {
         try {
         	onClickButtonLogin(event);
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.log(Level.SEVERE, null, ex);
         }
     }
 
@@ -114,7 +124,7 @@ public class LoginController implements Initializable {
         try {
         	onClickButtonLogin(event);
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.log(Level.SEVERE, null, ex);
         }
     }
 }

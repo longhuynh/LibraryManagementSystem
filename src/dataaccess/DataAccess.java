@@ -9,10 +9,11 @@ import java.nio.file.Path;
 import model.StorageType;
 import util.Constant;
 public class DataAccess {
+	public static final String OUTPUT_DIR = System.getProperty("user.dir") + "\\src\\dataaccess\\storage";
 	public static void saveToStorage(StorageType type, Object obj) {
 		ObjectOutputStream out = null;
 		try {
-			Path path = FileSystems.getDefault().getPath(Constant.OUTPUT_DIR, type.toString());
+			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
 			out = new ObjectOutputStream(Files.newOutputStream(path));
 			out.writeObject(obj);
 		} catch(IOException e) {
@@ -30,7 +31,7 @@ public class DataAccess {
 		ObjectInputStream in = null;
 		Object obj = null;
 		try {
-			Path path = FileSystems.getDefault().getPath(Constant.OUTPUT_DIR, type.toString());
+			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
 			in = new ObjectInputStream(Files.newInputStream(path));
 			obj = in.readObject();
 		} catch(Exception e) {

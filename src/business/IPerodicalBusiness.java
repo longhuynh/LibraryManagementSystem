@@ -4,7 +4,7 @@ import model.Periodical;
 import util.LibrarySystemException;
 
 public interface IPerodicalBusiness {	
-	public Periodical searchPeriodical(String title, int issueNum);
+	public Periodical findBy(String title, int issueNumber);
 	
 	public void checkoutPeriodical(String memberId, String title, int issueNum) throws LibrarySystemException;
 

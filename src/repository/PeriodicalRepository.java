@@ -11,22 +11,22 @@ import dataaccess.DataAccess;;
 public class PeriodicalRepository implements IBaseRepository<Periodical>{
 	private static HashMap<Pair<String, Integer>,Periodical> periodicals;
 
-	public Periodical search(String title, int issueNum) {
-		HashMap<Pair<String, Integer>, Periodical> periodicalsMap =  getAll();
-		return periodicalsMap.get(new Pair<String, Integer>(title, issueNum));
+	public Periodical findBy(String title, int issueNum) {
+		HashMap<Pair<String, Integer>, Periodical> allPeriodicals =  getAll();
+		return allPeriodicals.get(new Pair<String, Integer>(title, issueNum));
 	}
 	
-	public Periodical search(String title) {
+	public Periodical findBy(String title) {
 		HashMap<Pair<String, Integer>, Periodical> periodicalsMap =  getAll();
 		return periodicalsMap.get(title);
 	}
 	
 	public void save(Periodical periodical) {
-		HashMap<Pair<String, Integer>, Periodical> periodMap = getAll();
+		HashMap<Pair<String, Integer>, Periodical> allPeriodicals = getAll();
 		Pair<String, Integer> periodKey = new Pair(periodical.getTitle(), periodical.getIssueNumber());
-		periodMap.put(periodKey, periodical);
-		periodicals = periodMap;
-		DataAccess.saveToStorage(StorageType.PERIODICALS, periodMap);	
+		allPeriodicals.put(periodKey, periodical);
+		periodicals = allPeriodicals;
+		DataAccess.saveToStorage(StorageType.PERIODICALS, allPeriodicals);	
 	}
 	
 	
@@ -40,11 +40,10 @@ public class PeriodicalRepository implements IBaseRepository<Periodical>{
 	}
 
 	
-	public void loadEntityMap(List<Periodical> periodicalList) {
+	public void loadEntityMap(List<Periodical> list) {
 		periodicals = new HashMap<Pair<String, Integer>, Periodical>();
-		periodicalList.forEach(
+		list.forEach(
 			p -> periodicals.put(new Pair<String,Integer>(p.getTitle(), p.getIssueNumber()), p));
 		DataAccess.saveToStorage(StorageType.PERIODICALS, periodicals);
 	}
-	
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IBaseRepository<T> {
 	
-	public T search(String searchString);
+	public T findBy(String searchString);
 	
 	public void save(T obj);
 

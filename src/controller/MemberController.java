@@ -16,12 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-//import media.UserNameMedia;
 
-/**
- *
- * @author Long Huynh
- */
 public class MemberController implements Initializable {
 
 	@FXML
@@ -39,12 +34,6 @@ public class MemberController implements Initializable {
 	@FXML
 	public BorderPane bpContent;
 
-	/**
-	 * Initializes the controller class.
-	 * 
-	 * @param url
-	 * @param rb
-	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		ivEmployeIcon.setImage(new Image("/icon/addmember.png"));

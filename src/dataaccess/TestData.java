@@ -11,6 +11,7 @@ import model.CheckoutRecord;
 import model.CheckoutRecordEntry;
 import model.LibraryMember;
 import model.Periodical;
+import model.Role;
 import repository.BookRepository;
 import repository.MemberRepository;
 import repository.PeriodicalRepository;
@@ -20,63 +21,64 @@ public class TestData {
 	@SuppressWarnings("serial")
 	List<Address> addresses = new ArrayList<Address>() {
 		{
-			add(new Address("101 S. Main", "Fairfield", "IA", "52556"));
-			add(new Address("51 S. George", "Georgetown", "MI", "65434"));
-			add(new Address("23 Headley Ave", "Seville", "Georgia", "41234"));
-			add(new Address("1 N. Baton", "Baton Rouge", "LA", "33556"));
-			add(new Address("5001 Venice Dr.", "Los Angeles", "CA", "93736"));
-			add(new Address("1435 Channing Ave", "Palo Alto", "CA", "94301"));
-			add(new Address("42 Dogwood Dr.", "Fairfield", "IA", "52556"));
-			add(new Address("501 Central", "Mountain View", "CA", "94707"));
+			add(new Address("1000 N 4th", "Fairfield", "IA", "52557"));
+			add(new Address("500 S. George", "Georgetown", "MI", "65434"));
+			add(new Address("213 Headley Ave", "Seville", "Georgia", "41234"));
+			add(new Address("140 N. Baton", "Baton Rouge", "LA", "33556"));
+			add(new Address("200 Venice Dr.", "Los Angeles", "CA", "93736"));
+			add(new Address("135 Channing Ave", "Palo Alto", "CA", "94301"));
+			add(new Address("42 W 2nd ", "Fairfield", "IA", "52556"));
+			add(new Address("501 Mountain", "Mountain View", "CA", "94707"));
 		}
 	};
+	
 	public List<Author> authors = new ArrayList<Author>() {
 		{
-			add(new Author("Joe", "Thomas", "641-445-2123", addresses.get(0), "A happy man is he."));
-			add(new Author("Sandra", "Thomas", "641-445-2123", addresses.get(0), "A happy wife is she."));
-			add(new Author("Nirmal", "Pugh", "641-919-3223", addresses.get(1), "Thinker of thoughts."));
-			add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2), "Author of childrens' books."));
-			add(new Author("Sarah", "Connor", "123-422-2663", addresses.get(3), "Known for her clever style."));
+			add(new Author("Tom", "Thomas", "641-123-456", addresses.get(0), "Don’t think for a second that I actually care what you have to say."));
+			add(new Author("Peter", "Thomas", "641-333-4444", addresses.get(0), "Every storm runs out of rain."));
+			add(new Author("Maryam", "Pugh", "641-222-1111", addresses.get(1), "Have lots of hair and like ugly things."));
+			add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2), "I have this new theory that human adolescence doesn’t end until your early thirties."));
+			add(new Author("Sarah", "Connor", "123-422-2663", addresses.get(3), "I always feel sad for seedless watermelons, because what if they wanted babies?"));
 		}
 	};
 	
 	//Periodical(int issueNumber, String title, int maxCheckoutLength)
 	List<Periodical> periodicals = new ArrayList<Periodical>() {
 		{
-			add(new Periodical(1, "Journal of Skydiving", 3));
-			add(new Periodical(4, "Life Magazine", 7));
-			add(new Periodical(100, "Journal of Symbolic Logic", 3));
+			add(new Periodical(1, "Abstracts in Social Gerontology", 21));
+			add(new Periodical(4, "Literature Criticism Online", 7));
+			add(new Periodical(100, "Newspaper Source Plus", 21));
 		}
 	};
 	//Book(int id, String isbn, String title, int maxCheckoutLength, List<Author> authors)
 	List<Book> books = new ArrayList<Book>() {
 		{
-			add(new Book("23-11451", "The Big Fish", 21, Arrays.asList(authors.get(0), authors.get(1))));
-			add(new Book("28-12331", "Antartica", 7, Arrays.asList(authors.get(2))));
-			add(new Book("99-22223", "Thinking Java", 21, Arrays.asList(authors.get(3))));
-			add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(authors.get(4))));
+			add(new Book("23-12345", "Java Progrming", 21, Arrays.asList(authors.get(0), authors.get(1))));
+			add(new Book("28-12331", ".NET from begining", 7, Arrays.asList(authors.get(2))));
+			add(new Book("44-22223", "Thinking Java", 21, Arrays.asList(authors.get(3))));
+			add(new Book("48-53455", "Business Administor", 7, Arrays.asList(authors.get(4))));
 		}
 	};
 	
 	List<CheckoutRecordEntry> checkoutRecordEntries = new ArrayList<CheckoutRecordEntry>() {
 		{
 			add(new CheckoutRecordEntry(
-				books.get(0).getNextAvailableCopy(), LocalDate.of(2011,12,1), LocalDate.of(2011,12,22)));
+				books.get(0).getNextAvailableCopy(), LocalDate.of(2016, 1,21), LocalDate.of(2016,12,28)));
 			add(new CheckoutRecordEntry(
-				books.get(0).getNextAvailableCopy(), LocalDate.of(2015,6,22), LocalDate.of(2015,7,13)));
+				books.get(0).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,7,29)));
 			add(new CheckoutRecordEntry(
-				books.get(1).getNextAvailableCopy(), LocalDate.of(2015,6,27), LocalDate.of(2015,7,18)));
+				books.get(1).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
 			add(new CheckoutRecordEntry(
-				books.get(2).getNextAvailableCopy(), LocalDate.of(2015,6,27), LocalDate.of(2015,7,18)));
+				books.get(2).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));
 			
 			add(new CheckoutRecordEntry(
-				periodicals.get(0).getNextAvailableCopy(), LocalDate.of(2015,6,20), LocalDate.of(2015,6,27)));
+				periodicals.get(0).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));
 			add(new CheckoutRecordEntry(
-				periodicals.get(0).getNextAvailableCopy(), LocalDate.of(2015,6,20), LocalDate.of(2015,6,27)));
+				periodicals.get(0).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));
 			add(new CheckoutRecordEntry(
-				periodicals.get(1).getNextAvailableCopy(), LocalDate.of(2015,6,22), LocalDate.of(2015,6,29)));
+				periodicals.get(1).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
 			add(new CheckoutRecordEntry(
-				periodicals.get(2).getNextAvailableCopy(), LocalDate.of(2015,6,22), LocalDate.of(2015,6,25)));
+				periodicals.get(2).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
 			
 		}
 	};
@@ -111,19 +113,24 @@ public class TestData {
 	}
 	
 	public void generateLibraryMemberData() {
-		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "641-223-2211", addresses.get(4));
+		LibraryMember libraryMember = new LibraryMember("1001", "Long", "Huynh", "641-123-4567", addresses.get(0), Role.BOTH);
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(4));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1002", "Drew", "Stevens", "702-998-2414", addresses.get(5));
+		libraryMember = new LibraryMember("1002", "Achyut", "Devkota", "702-998-2414", addresses.get(5), Role.ADMIN);
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(2));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(5));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1003", "Sarah", "Eagleton", "451-234-8811", addresses.get(6));
+		libraryMember = new LibraryMember("1003", "Amit", "Niroula", "451-234-8811", addresses.get(6), Role.LIBRARIAN);
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(6));
+		members.add(libraryMember);
+		
+		libraryMember = new LibraryMember("1004", "Sarah", "Obama", "451-234-8811", addresses.get(1), Role.LIBRARIAN);
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(2));
 		members.add(libraryMember);
 		
 		MemberRepository repository = new MemberRepository();
@@ -132,8 +139,10 @@ public class TestData {
 	
 	public static void main(String[] args) {
 		TestData testData = new TestData();
+		System.out.println("Initialize data ...");
 		testData.generateBookData();
 		testData.generatePeriodicalData();
-		testData.generateLibraryMemberData();		
+		testData.generateLibraryMemberData();	
+		System.out.println("Finish ...");
 	}
 }

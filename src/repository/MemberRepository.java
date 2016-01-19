@@ -6,26 +6,28 @@ import java.util.List;
 import dataaccess.DataAccess;
 import model.StorageType;
 import model.LibraryMember;
+import model.Pair;
+import model.Periodical;
 
 public class MemberRepository implements IBaseRepository<LibraryMember> {
 	private static HashMap<String, LibraryMember> members;
 
 	@Override
-	public LibraryMember search(String memberId) {
-		HashMap<String, LibraryMember> mems = getAll();
-		if (mems.containsKey(memberId)) {
-			return mems.get(memberId);
+	public LibraryMember findBy(String memberId) {
+		HashMap<String, LibraryMember> allMembers = getAll();
+		if (allMembers.containsKey(memberId)) {
+			return allMembers.get(memberId);
 		}
 		return null;
 	}
 
 	@Override
 	public void save(LibraryMember member) {
-		HashMap<String, LibraryMember> mems = getAll();
+		HashMap<String, LibraryMember> allMembers = getAll();
 		String memberId = member.getMemberId();
-		mems.put(memberId, member);
-		members = mems;
-		DataAccess.saveToStorage(StorageType.MEMBERS, mems);
+		allMembers.put(memberId, member);
+		members = allMembers;
+		DataAccess.saveToStorage(StorageType.MEMBERS, allMembers);
 	}
 
 	@Override
@@ -38,9 +40,16 @@ public class MemberRepository implements IBaseRepository<LibraryMember> {
 	}
 
 	@Override
-	public void loadEntityMap(List<LibraryMember> memberList) {
+	public void loadEntityMap(List<LibraryMember> list) {
 		members = new HashMap<String, LibraryMember>();
-		memberList.forEach(member -> members.put(member.getMemberId(), member));
+		list.forEach(member -> members.put(member.getMemberId(), member));
 		DataAccess.saveToStorage(StorageType.MEMBERS, members);
 	}
+	
+	public LibraryMember login(String memberId, String password) {
+		LibraryMember member = findBy(memberId);
+		if(member != null && member.getPassword().equals(password)) 
+			return member;
+		return null;
+	}	
 }

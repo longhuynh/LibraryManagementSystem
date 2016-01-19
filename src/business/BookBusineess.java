@@ -19,7 +19,7 @@ public class BookBusineess implements IBookBusiness {
 	
 	public void checkoutBook(String memberId, String isbn) throws LibrarySystemException {
 		MemberBusiness memberBusiness = new MemberBusiness();
-		LibraryMember member = memberBusiness.search(memberId);
+		LibraryMember member = memberBusiness.findBy(memberId);
 		
 		if(member == null) throw new LibrarySystemException("Library member with ID " + memberId + " not found!");
 		Book book = searchBook(isbn);
@@ -36,7 +36,7 @@ public class BookBusineess implements IBookBusiness {
 	
 	public Book searchBook(String isbn) {
 		BookRepository repositoty = new BookRepository();
-		return repositoty.search(isbn);
+		return repositoty.findBy(isbn);
 	}
 	
 	/**
@@ -90,7 +90,6 @@ public class BookBusineess implements IBookBusiness {
 		
 			status = new CopyStatus(copy, borrower, isOverdue);
 		} else {
-			//no borrower was found
 			status = new CopyStatus(copy, null, false);
 		}				    
 		return status;

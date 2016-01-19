@@ -12,18 +12,18 @@ public class BookRepository implements IBaseRepository<Book>{
 	private static HashMap<String,Book> books;	
 	
 	@Override
-	public Book search(String isbn) {
-		HashMap<String,Book> booksMap =  getAll();
-		return booksMap.get(isbn);
+	public Book findBy(String isbn) {
+		HashMap<String,Book> allBooks = getAll();
+		return allBooks.get(isbn);
 	}
 	
 	@Override
 	public void save(Book book) {
-		HashMap<String, Book> bookMap = getAll();
+		HashMap<String, Book> allBooks = getAll();
 		String isbn = book.getIsbn();
-		bookMap.put(isbn, book);
-		books = bookMap;
-		DataAccess.saveToStorage(StorageType.BOOKS, bookMap);	
+		allBooks.put(isbn, book);
+		books = allBooks;
+		DataAccess.saveToStorage(StorageType.BOOKS, allBooks);	
 	}	
 
 	@Override
@@ -36,9 +36,9 @@ public class BookRepository implements IBaseRepository<Book>{
 	}	
 
 	@Override
-	public void loadEntityMap(List<Book> bookList) {
+	public void loadEntityMap(List<Book> list) {
 		books = new HashMap<String, Book>();
-		bookList.forEach(book -> books.put(book.getIsbn(), book));
+		list.forEach(book -> books.put(book.getIsbn(), book));
 		DataAccess.saveToStorage(StorageType.BOOKS, books);
 	}	
 }

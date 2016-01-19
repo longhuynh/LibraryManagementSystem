@@ -1,11 +1,11 @@
 package model;
 
-public enum Permission {
-	Libraryan(1), Admin(2), Both(3);
+public enum Role {
+	LIBRARIAN(1), ADMIN(2), BOTH(3);
 
 	private double value;
 
-	private Permission(double value) {
+	private Role(double value) {
 		this.value = value;
 	}
 
