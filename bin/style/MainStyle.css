@@ -62,12 +62,6 @@
    -fx-border-width: 0.5px;
     -fx-border-color: #ACACAC;
    -fx-border-radius: 50px;
-/*    -fx-background-radius: 50px;
-    -fx-background-color: white;
-    -fx-font-size: 12px; 
-    -fx-padding: 8px 25px;
-    -fx-font-weight:700;
-    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;*/
 }
 .button:pressed{
     -fx-background-color: #EA5444;
@@ -171,8 +165,8 @@ AnchorPane{
     -fx-background-radius: 0px;
     -fx-padding: 5;
     -fx-font-size: 15px; 
-    -fx-min-hight: 20px;
-    -fx-max-hight: 20px;
+    -fx-min-height: 20px;
+    -fx-max-height: 20px;
 }
 
 /*******************************************************************************

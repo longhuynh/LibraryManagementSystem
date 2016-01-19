@@ -1,4 +1,8 @@
 package business;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import model.Address;
 import model.LibraryMember;
 import model.Role;
@@ -7,6 +11,12 @@ import util.LibrarySystemException;
 
 public class MemberBusiness implements IMemberBusiness {
 
+	public List<LibraryMember> getAll(){
+		MemberRepository repositoty = new MemberRepository();
+		List<LibraryMember> list = new ArrayList<LibraryMember>(repositoty.getAll().values());
+		return list;
+	}
+	
 	public void addNewMember(String memberId, String firstName, String lastName,
 			String telephone, Address address, Role role) throws LibrarySystemException {
 		LibraryMember member = findBy(memberId);

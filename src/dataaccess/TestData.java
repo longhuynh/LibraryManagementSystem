@@ -10,11 +10,9 @@ import model.Author;
 import model.CheckoutRecord;
 import model.CheckoutRecordEntry;
 import model.LibraryMember;
-import model.Periodical;
 import model.Role;
 import repository.BookRepository;
 import repository.MemberRepository;
-import repository.PeriodicalRepository;
 
 public class TestData {
 	List<LibraryMember> members = new ArrayList<LibraryMember>();
@@ -32,6 +30,7 @@ public class TestData {
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	public List<Author> authors = new ArrayList<Author>() {
 		{
 			add(new Author("Tom", "Thomas", "641-123-456", addresses.get(0), "Don’t think for a second that I actually care what you have to say."));
@@ -42,15 +41,8 @@ public class TestData {
 		}
 	};
 	
-	//Periodical(int issueNumber, String title, int maxCheckoutLength)
-	List<Periodical> periodicals = new ArrayList<Periodical>() {
-		{
-			add(new Periodical(1, "Abstracts in Social Gerontology", 21));
-			add(new Periodical(4, "Literature Criticism Online", 7));
-			add(new Periodical(100, "Newspaper Source Plus", 21));
-		}
-	};
-	//Book(int id, String isbn, String title, int maxCheckoutLength, List<Author> authors)
+	
+	@SuppressWarnings("serial")
 	List<Book> books = new ArrayList<Book>() {
 		{
 			add(new Book("23-12345", "Java Progrming", 21, Arrays.asList(authors.get(0), authors.get(1))));
@@ -60,6 +52,7 @@ public class TestData {
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	List<CheckoutRecordEntry> checkoutRecordEntries = new ArrayList<CheckoutRecordEntry>() {
 		{
 			add(new CheckoutRecordEntry(
@@ -69,20 +62,11 @@ public class TestData {
 			add(new CheckoutRecordEntry(
 				books.get(1).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
 			add(new CheckoutRecordEntry(
-				books.get(2).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));
-			
-			add(new CheckoutRecordEntry(
-				periodicals.get(0).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));
-			add(new CheckoutRecordEntry(
-				periodicals.get(0).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));
-			add(new CheckoutRecordEntry(
-				periodicals.get(1).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
-			add(new CheckoutRecordEntry(
-				periodicals.get(2).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
-			
+				books.get(2).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));			
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	List<CheckoutRecord> checkoutRecords = new ArrayList<CheckoutRecord>() {
 		{
 			add(new CheckoutRecord());
@@ -104,33 +88,25 @@ public class TestData {
 		repository.loadEntityMap(books);	
 	}
 
-	public void generatePeriodicalData() {
-		periodicals.get(0).addCopy();
-		periodicals.get(1).addCopy();
-		periodicals.get(2).addCopy();
-		PeriodicalRepository repository = new PeriodicalRepository();
-		repository.loadEntityMap(periodicals);		
-	}
-	
 	public void generateLibraryMemberData() {
 		LibraryMember libraryMember = new LibraryMember("1001", "Long", "Huynh", "641-123-4567", addresses.get(0), Role.BOTH);
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(4));
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		members.add(libraryMember);
 		
 		libraryMember = new LibraryMember("1002", "Achyut", "Devkota", "702-998-2414", addresses.get(5), Role.ADMIN);
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(2));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(5));
 		members.add(libraryMember);
 		
 		libraryMember = new LibraryMember("1003", "Amit", "Niroula", "451-234-8811", addresses.get(6), Role.LIBRARIAN);
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(6));
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		members.add(libraryMember);
 		
 		libraryMember = new LibraryMember("1004", "Sarah", "Obama", "451-234-8811", addresses.get(1), Role.LIBRARIAN);
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(2));
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		members.add(libraryMember);
 		
 		MemberRepository repository = new MemberRepository();
@@ -141,7 +117,6 @@ public class TestData {
 		TestData testData = new TestData();
 		System.out.println("Initialize data ...");
 		testData.generateBookData();
-		testData.generatePeriodicalData();
 		testData.generateLibraryMemberData();	
 		System.out.println("Finish ...");
 	}

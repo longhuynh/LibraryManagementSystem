@@ -86,7 +86,7 @@ public class LoginController implements Initializable {
 	        	   controller.viewDetails(member);
 	        	   
 	               adminPanelStage.setScene(adminPanelScene);
-	               adminPanelStage.getIcons().add(new Image("/image/icon.jpg"));
+	               adminPanelStage.getIcons().add(new Image("/image/icon.png"));
 	               adminPanelStage.setTitle("Welcome [" + member.getFullName() + "] to Library Management System");
 	               adminPanelStage.show();
 	

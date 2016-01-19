@@ -12,7 +12,7 @@
    <children>
       <BorderPane fx:id="bpContent" layoutX="318.0" layoutY="172.0" prefHeight="526.0" prefWidth="736.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <StackPane fx:id="spEmployeContent" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <StackPane fx:id="spMemberContent" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
          <top>
             <GridPane prefHeight="61.0" prefWidth="736.0" BorderPane.alignment="CENTER">
@@ -45,11 +45,11 @@
                                 <menus>
                                   <Menu mnemonicParsing="false" text="Action">
                                     <items>
-                                      <MenuItem fx:id="btnAddEmployee" mnemonicParsing="false" onAction="#btnAddEmployeeOnClick" text="Add member" />
-                                          <MenuItem fx:id="btnViewEmployee" mnemonicParsing="false" onAction="#btnViewEmployeeOnAction" text="View members" />
+                                      <MenuItem fx:id="btnAddMember" mnemonicParsing="false" onAction="#onClickAddMemberButton" text="Add member" />
+                                          <MenuItem fx:id="btnViewMember" mnemonicParsing="false" onAction="#onClickViewMemberButton" text="View members" />
                                     </items>
                                        <graphic>
-                                          <ImageView fx:id="ivEmployeIcon" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                                          <ImageView  fx:id="imgMemberIcon" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true"/>
                                        </graphic>
                                   </Menu>
                                 </menus>

@@ -9,24 +9,24 @@ import util.Constant;
 final public class CheckoutRecordEntry implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 1L;
-	private IEntityCopy copy;
+	private BookCopy copy;
 	private LocalDate checkoutDate;
 	private LocalDate dueDate;
 
 	// this field is necessary in order to detect which items are overdue
 	private boolean hasBeenReturned = false;
 
-	public CheckoutRecordEntry(IEntityCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
+	public CheckoutRecordEntry(BookCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
 		this.copy = copy;
 		this.checkoutDate = checkoutDate;
 		this.dueDate = dueDate;
 	}
 
-	public static CheckoutRecordEntry createEntry(IEntityCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
+	public static CheckoutRecordEntry createEntry(BookCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
 		return new CheckoutRecordEntry(copy, checkoutDate, dueDate);
 	}
 
-	public IEntityCopy getCopy() {
+	public BookCopy getCopy() {
 		return copy;
 	}
 
@@ -79,7 +79,7 @@ final public class CheckoutRecordEntry implements Serializable, Cloneable {
 			return false;
 		CheckoutRecordEntry e = (CheckoutRecordEntry) obj;
 		return checkoutDate.equals(e.checkoutDate) && dueDate.equals(e.dueDate)
-				&& copy.getEntity().equals(e.copy.getEntity())
+				&& copy.getBook().equals(e.copy.getBook())
 				&& copy.getCopyNumuber() == e.copy.getCopyNumuber();
 	}
 

@@ -1,4 +1,5 @@
 package business;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -11,11 +12,14 @@ import model.CopyStatus;
 import model.LibraryMember;
 import repository.BookRepository;
 import repository.MemberRepository;
-import model.IEntityCopy;
-import model.IEntity;
+import model.BookCopy;
 import util.LibrarySystemException;
 
 public class BookBusineess implements IBookBusiness {
+	public HashMap<String, Book> getAll(){
+		BookRepository repositoty = new BookRepository();
+		return repositoty.getAll();
+	}
 	
 	public void checkoutBook(String memberId, String isbn) throws LibrarySystemException {
 		MemberBusiness memberBusiness = new MemberBusiness();
@@ -25,7 +29,7 @@ public class BookBusineess implements IBookBusiness {
 		Book book = searchBook(isbn);
 		if(book == null || !book.isAvailable()) throw new LibrarySystemException(
 				"Book with ISBN = " + isbn + " is not available for checkout!");
-		IEntityCopy copy = book.getNextAvailableCopy();
+		BookCopy copy = book.getNextAvailableCopy();
 		copy.changeAvailability();
 		member.checkout(copy, 
 				LocalDate.now(), 
@@ -40,7 +44,7 @@ public class BookBusineess implements IBookBusiness {
 	}
 	
 	/**
-	 * Looks up book by isbn to see if it exists, throw exceptioni.
+	 * Looks up book by isbn to see if it exists, throw exception.
 	 * Else add the book to storage
 	 */
 	public boolean addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) 
@@ -61,9 +65,9 @@ public class BookBusineess implements IBookBusiness {
 		return true;
 	}
 	
-	public CopyStatus computeStatus(IEntityCopy copy) {
+	public CopyStatus computeStatus(BookCopy copy) {
 		MemberRepository repository = new MemberRepository();
-		IEntity item = copy.getEntity();
+		Book item = copy.getBook();
 		List<LibraryMember> membersFound = repository.getAll().values()
 				         .stream()			      
 				         .filter(member ->  
@@ -72,7 +76,7 @@ public class BookBusineess implements IBookBusiness {
 				            	return member.getRecord().getCheckoutRecordEntries()
 				            	      .stream()
 				            	      .filter(e -> 			                   
-				            	            e.getCopy().getEntity().equals(item))
+				            	            e.getCopy().getBook().equals(item))
 				            	      .findAny()
 				            	      .isPresent();
 				            })
@@ -84,7 +88,7 @@ public class BookBusineess implements IBookBusiness {
 			CheckoutRecord record = borrower.getRecord();
 			//returns true if the checkout record entry for this copy indicates the item is overdue
 			boolean isOverdue = record.getCheckoutRecordEntries().stream()
-					                  .filter(e -> e.getCopy().getEntity().equals(item) 
+					                  .filter(e -> e.getCopy().getBook().equals(item) 
 					                		  && e.isOverdue())
 					                  .findAny().isPresent();
 		

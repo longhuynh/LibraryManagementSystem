@@ -29,7 +29,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.LibraryMember;
 import model.Role;
-import util.StringHelper;
 
 
 /**
@@ -173,7 +172,7 @@ public class ApplicationController implements Initializable {
         fXMLLoader.load(getClass().getResource("/view/Member.fxml").openStream());       
         MemberController controller = fXMLLoader.getController();
         controller.bpContent.getStylesheets().add("/style/MainStyle.css");
-        controller.btnViewEmployeeOnAction(event);
+        controller.onClickViewMemberButton(event);
         AnchorPane acPane = fXMLLoader.getRoot();
         stackPaneContent.getChildren().clear();
         stackPaneContent.getChildren().add(acPane);    }
@@ -272,6 +271,6 @@ public class ApplicationController implements Initializable {
         imgUserTop.setFill(new ImagePattern(image));
         lblFullName.setText(member.getFullName());
         lblUserName.setText(member.getFullName());
-        lblRoleAs.setText(StringHelper.toDisplayCase(member.getRole().toString()));
+        lblRoleAs.setText("Role: " + member.getRole());
     }
 }

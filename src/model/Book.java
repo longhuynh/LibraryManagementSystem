@@ -1,11 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-final public class Book implements IEntity, Cloneable {
+final public class Book implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 1L;
 	private BookCopy[] copies;
@@ -19,7 +20,6 @@ final public class Book implements IEntity, Cloneable {
 		this.title = title;
 		this.authors = Collections.unmodifiableList(authors);
 		this.copies = new BookCopy[] { new BookCopy(this, 1, true) };
-
 	}
 
 	public void updateBookCopyArray(BookCopy copy) {
@@ -59,7 +59,7 @@ final public class Book implements IEntity, Cloneable {
 						copies[i].getCopyNumuber(), copies[i].isAvailable());
 			}
 			for (int i = 0; i < copies.length; ++i) {
-				((Book) newCopies[i].getEntity()).copies = newCopies;
+				((Book) newCopies[i].getBook()).copies = newCopies;
 			}
 			book.copies = newCopies;
 		} catch (CloneNotSupportedException e) {
@@ -80,12 +80,10 @@ final public class Book implements IEntity, Cloneable {
 		return "isbn: " + isbn + ", available: " + isAvailable();
 	}
 
-	@Override
 	public int getCopyCount() {
 		return copies.length;
 	}
 
-	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -98,13 +96,13 @@ final public class Book implements IEntity, Cloneable {
 		return isbn;
 	}
 
-	@Override
-	public IEntityCopy getNextAvailableCopy() {
+
+	public BookCopy getNextAvailableCopy() {
 		Optional<BookCopy> optional = Arrays.stream(copies).filter(x -> x.isAvailable()).findFirst();
 		return optional.isPresent() ? optional.get() : null;
 	}
 
-	@Override
+
 	public int getMaxCheckoutLength() {
 		return maxCheckoutLength;
 	}

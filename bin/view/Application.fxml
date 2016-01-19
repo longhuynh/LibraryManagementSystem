@@ -186,7 +186,7 @@
 																<ImageView fx:id="imgMenuBtn" fitHeight="52.0"
 																	fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
 																	<image>
-																		<Image url="@../icon/menu.png" />
+																		<Image url="@../icon/addmember.png" />
 																	</image>
 																</ImageView>
 															</graphic>

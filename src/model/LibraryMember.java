@@ -18,7 +18,7 @@ public class LibraryMember extends Person implements Serializable {
 		this.setPassword(DEFAULTPASSWORD);
 	}
 
-	public void checkout(IEntityCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
+	public void checkout(BookCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
 		copy = copy.changeAvailability();
 		CheckoutRecordEntry entry = CheckoutRecordEntry.createEntry(copy, checkoutDate, dueDate);
 		record = record.addEntry(entry);

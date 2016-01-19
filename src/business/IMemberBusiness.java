@@ -1,11 +1,16 @@
 package business;
 
+import java.util.HashMap;
+import java.util.List;
+
 import model.Address;
 import model.LibraryMember;
 import model.Role;
 import util.LibrarySystemException;
 
 public interface IMemberBusiness {
+	public List<LibraryMember> getAll() ;
+	
 	public LibraryMember login(String memberId,String password) throws LibrarySystemException;
 	
 	public void addNewMember(String memberId, String firstName, String lastName,

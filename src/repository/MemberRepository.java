@@ -6,8 +6,6 @@ import java.util.List;
 import dataaccess.DataAccess;
 import model.StorageType;
 import model.LibraryMember;
-import model.Pair;
-import model.Periodical;
 
 public class MemberRepository implements IBaseRepository<LibraryMember> {
 	private static HashMap<String, LibraryMember> members;

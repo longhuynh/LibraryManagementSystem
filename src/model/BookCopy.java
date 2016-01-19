@@ -1,8 +1,9 @@
 package model;
 
-final public class BookCopy implements IEntityCopy, Cloneable {
-	private static final long serialVersionUID = 1L;
+import java.io.Serializable;
 
+final public class BookCopy implements Serializable, Cloneable {
+	private static final long serialVersionUID = 1L;
 	private Book book;
 	private int copyNumuber;
 	private boolean isAvailable;
@@ -13,23 +14,19 @@ final public class BookCopy implements IEntityCopy, Cloneable {
 		this.isAvailable = isAvailable;
 	}
 
-	@Override
 	public boolean isAvailable() {
 		return isAvailable;
 	}
 
-	@Override
 	public int getCopyNumuber() {
 		return copyNumuber;
 	}
 
-	@Override
-	public IEntity getEntity() {
+	public Book getBook() {
 		return book;
 	}
-
-	@Override
-	public IEntityCopy changeAvailability() {
+	
+	public BookCopy changeAvailability() {
 		BookCopy copy = clone();
 		copy.isAvailable = !isAvailable;
 		book.updateBookCopyArray(copy);
@@ -41,7 +38,7 @@ final public class BookCopy implements IEntityCopy, Cloneable {
 		BookCopy bookCopy;
 		try {
 			bookCopy = (BookCopy) super.clone();
-			Book b = (Book) bookCopy.getEntity();
+			Book b = (Book) bookCopy.getBook();
 			bookCopy.book = b.clone();
 
 		} catch (CloneNotSupportedException e) {
