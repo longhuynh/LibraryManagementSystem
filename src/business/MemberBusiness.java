@@ -17,6 +17,7 @@ public class MemberBusiness implements IMemberBusiness {
 		return list;
 	}
 	
+	
 	public void addNewMember(String memberId, String firstName, String lastName,
 			String telephone, Address address, Role role) throws LibrarySystemException {
 		LibraryMember member = findBy(memberId);

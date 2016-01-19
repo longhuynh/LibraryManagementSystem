@@ -21,8 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-        Scene scene = new Scene(root);
-        
+        Scene scene = new Scene(root);        
         primaryStage.setScene(scene);
         primaryStage.setTitle("Welcome to Library Management System - Login");
         primaryStage.getIcons().add(new Image("/image/icon.png"));

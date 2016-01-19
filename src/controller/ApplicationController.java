@@ -267,7 +267,8 @@ public class ApplicationController implements Initializable {
     }
 
     public void viewDetails(User user) {
-    	Image image = new Image("/image/1001.jpg");
+    	Image image = new Image("/image/" + user.getId() +".jpg");
+    	
         circleImgUser.setFill(new ImagePattern(image));
         imgUserTop.setFill(new ImagePattern(image));
         lblFullName.setText(user.getUserName());
