@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
@@ -8,39 +9,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AboutController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AboutController">
 	<children>
-		<VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0"
-			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-			AnchorPane.topAnchor="0.0">
+		<VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
 				<HBox alignment="CENTER" prefHeight="517.0" prefWidth="735.0">
 					<children>
 						<AnchorPane prefHeight="517.0" prefWidth="689.0">
 							<children>
-								<Label layoutX="197.0" layoutY="195.0" prefHeight="35.0"
-									prefWidth="317.0" text="Group members">
+								<Label layoutX="28.0" layoutY="29.0" prefHeight="35.0" prefWidth="317.0" text="Library Manager">
 									<font>
 										<Font name="System Bold" size="29.0" />
 									</font>
 								</Label>
 
-								<Label layoutX="220.0" layoutY="260.0" text="Long Huynh #984850">
+								<Label layoutX="75.0" layoutY="365.0" text="Long Huynh">
+									<font>
+										<Font name="System Bold" size="14.0" />
+									</font>
+								</Label>
+								<Label layoutX="36.0" layoutY="240.0" prefHeight="27.0" prefWidth="148.0" text="Developer Teams">
 									<font>
 										<Font name="System Bold" size="18.0" />
 									</font>
 								</Label>
-								<Label layoutX="220.0" layoutY="300.0" text="Achyut">
+								<Label layoutX="442.0" layoutY="361.0" prefHeight="20.0" prefWidth="89.0" text="Amit Niroula">
 									<font>
-										<Font name="System Bold" size="18.0" />
+										<Font name="System Bold" size="14.0" />
 									</font>
 								</Label>
-								<Label layoutX="220.0" layoutY="340.0" text="Amit">
-									<font>
-										<Font name="System Bold" size="18.0" />
-									</font>
-								</Label>
+                        <Label layoutX="36.0" layoutY="72.0" prefHeight="168.0" prefWidth="326.0" text="Library Manager is a Library Management Systerm. Its has full funtionality to handle library's books and library members (Users) with  different privilage groups (e.g. Administrator, Librarian and Library Member). In addition to, It can record library member book checkout activities." textAlignment="JUSTIFY" wrapText="true" />
+                        <Label layoutX="255.0" layoutY="361.0" prefHeight="21.0" prefWidth="81.0" text="Achyut Dev">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgLibraryMgtmIcon" fitHeight="160.0" fitWidth="160.0" layoutX="389.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true"/>
+
+                        <Circle fx:id="circularImageLong" fill="DODGERBLUE" layoutX="116.0" layoutY="320.0" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circularImageAchyut"  fill="DODGERBLUE" layoutX="296.0" layoutY="320.0" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circularImageAmit" fill="DODGERBLUE" layoutX="487.0" layoutY="320.0" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
 							</children>
 						</AnchorPane>
 					</children>
