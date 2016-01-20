@@ -2,8 +2,11 @@ package controller.book;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import business.BookBusiness;
+
 import business.MemberBusiness;
 import controller.Dialog;
 import javafx.collections.FXCollections;
@@ -17,10 +20,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Book;
+import model.CheckoutRecord;
+import model.CheckoutRecordEntry;
+import model.CheckoutRecordTableEntry;
 import model.LibraryMember;
 import util.LibrarySystemException;
 
 public class CheckoutController implements Initializable {
+	private static final Logger logger = Logger.getLogger(CheckoutController.class.getName());
+
 	private String memberId;
 	@FXML
 	private MenuButton mbtMember;
@@ -33,6 +41,19 @@ public class CheckoutController implements Initializable {
 	private TableColumn<Object, Object> clmFirstName;
 	@FXML
 	private TableColumn<Object, Object> clmLastName;
+	
+	@FXML
+	private TableView<CheckoutRecordTableEntry> tblCheckoutRecord;
+	@FXML
+	private TableColumn<Object, Object> clmCopyNumber;
+	@FXML
+	private TableColumn<Object, Object> clmTitle;
+	@FXML
+	private TableColumn<Object, Object> clmIsbn;
+	@FXML
+	private TableColumn<Object, Object> clmDueDate;
+	@FXML
+	private TableColumn<Object, Object> clmCheckoutDate;
 	@FXML
 	private TextField txtSearchMember;
 	@FXML
@@ -54,9 +75,31 @@ public class CheckoutController implements Initializable {
 	@FXML
 	private void onClickTableMember(MouseEvent event) {
 		mbtMember.setText(tblMember.getSelectionModel().getSelectedItem().getFullName());
-		memberId = tblMember.getSelectionModel().getSelectedItem().getMemberId();
-		System.out.println(memberId);
+		memberId = tblMember.getSelectionModel().getSelectedItem().getMemberId();	
 
+		try {
+			showCheckoutEntries();			
+		
+		}catch (LibrarySystemException ex) {
+			logger.log(Level.SEVERE, null, ex);
+		}
+	}
+
+	private void showCheckoutEntries() throws LibrarySystemException {
+		ObservableList<CheckoutRecordTableEntry> checkoutRecordEntries = FXCollections.observableArrayList();
+		BookBusiness bookBusiness = new BookBusiness();		
+		CheckoutRecord checkoutRecord = bookBusiness.getCheckoutRecordByMemberId(memberId);
+		for (CheckoutRecordEntry entry : checkoutRecord.getCheckoutRecordEntries()) {
+			checkoutRecordEntries.add(new CheckoutRecordTableEntry(entry));
+		}
+
+		tblCheckoutRecord.getItems().clear();
+		tblCheckoutRecord.setItems(checkoutRecordEntries);
+		clmIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+		clmTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+		clmCopyNumber.setCellValueFactory(new PropertyValueFactory<>("copyNumber"));
+		clmDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+		clmCheckoutDate.setCellValueFactory(new PropertyValueFactory<>("checkoutDate"));
 	}
 
 	@FXML
@@ -71,17 +114,25 @@ public class CheckoutController implements Initializable {
 
 	@FXML
 	private void onClickButtonOK(ActionEvent event) {
+		
+		if("ok".equals(btnOK.getText().toLowerCase())){
+			btnOK.setText("Close");
 		LibraryMember member = tblMember.getSelectionModel().getSelectedItem();
 		BookBusiness bookBusiness = new BookBusiness();
 		checkAllRule();
 		try {
 			bookBusiness.checkoutBook(member.getMemberId(), txtIsbn.getText());
-			Stage stage = (Stage) btnOK.getScene().getWindow();
+			Dialog.showInformationDialog("Error", null, "Checkout book successful.");
+		showCheckoutEntries();
+			
+		} catch (LibrarySystemException e) {
+			Dialog.showErrorDialog("Error", null, e.getMessage());
+		}}
+		else{
+			Stage stage = (Stage) btnClose.getScene().getWindow();
 			stage.close();
 			AllBookController controller = new AllBookController();
 			controller.viewDetails();
-		} catch (LibrarySystemException e) {
-			Dialog.showErrorDialog("Error", null, e.getMessage());
 		}
 	}
 	

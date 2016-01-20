@@ -20,4 +20,19 @@ final public class Author extends Person implements Serializable {
 		this.bio = bio;
 		this.credentials = "";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null) {
+	        return false;
+	    }
+	    if (getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    final Person other = (Person) obj;
+	    if ((this.getFullName() == null) ? (other.getFullName() != null) : !this.getFullName().equals(other.getFullName())) {
+	        return false;
+	    }
+	    return true;
+	}
 }

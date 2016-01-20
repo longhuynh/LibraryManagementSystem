@@ -18,9 +18,4 @@ public class RandomIdGenarator {
 			i = -i;
 		return lo + i;
 	}
-
-	public static String randomString() {
-		return randomString(4, 4);
-	}
-
 }

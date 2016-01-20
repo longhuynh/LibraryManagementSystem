@@ -31,10 +31,34 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Author;
 import util.LibrarySystemException;
+import util.RuleSetFactory;
 
 public class AddBookController implements Initializable {
 	private static final Logger logger = Logger.getLogger(AllMemberController.class.getName());
-
+	List<Address> addresses = new ArrayList<Address>() {
+		{
+			add(new Address("1000 N 4th", "Fairfield", "IA", "52557"));
+			add(new Address("500 S. Washington", "Kansas City", "MI", "65434"));
+			add(new Address("213 W. Ave", "Seville", "Georgia", "41234"));
+			add(new Address("140 N. Baton", "Baton Rouge", "TX", "33556"));
+			add(new Address("200 Venice Dr.", "Los Angeles", "CA", "93736"));
+			add(new Address("135 New York Ave", "California", "CA", "94301"));
+			add(new Address("42 W 2nd ", "Fairfield", "IA", "52556"));
+			add(new Address("501 Mountain", "Mountain View", "CA", "94707"));
+		}
+	};
+	
+	@SuppressWarnings("serial")
+	public List<Author> allAuthors = new ArrayList<Author>() {
+		{
+			add(new Author("Tom", "Thomas", "641123456", addresses.get(0), "Don’t think for a second that I actually care what you have to say."));
+			add(new Author("Peter", "Thomas", "6413334444", addresses.get(0), "Every storm runs out of rain."));
+			add(new Author("Maryam", "Pugh", "6412221111", addresses.get(1), "Have lots of hair and like ugly things."));
+			add(new Author("Andrew", "Cleveland", "9764452232", addresses.get(2), "I have this new theory that human adolescence doesn’t end until your early thirties."));
+			add(new Author("Sarah", "Connor", "1234222663", addresses.get(3), "I always feel sad for seedless watermelons, because what if they wanted babies?"));
+		}
+	};	
+	
 	CustomTextField customTextField = new CustomTextField();
 	@FXML
 	private TextField txtIsbn;
@@ -72,33 +96,7 @@ public class AddBookController implements Initializable {
 	}
 
 	private void generateListView() {
-		List<Address> addresses = new ArrayList<Address>() {
-			{
-				add(new Address("1000 N 4th", "Fairfield", "IA", "52557"));
-				add(new Address("500 S. George", "Georgetown", "MI", "65434"));
-				add(new Address("213 Headley Ave", "Seville", "Georgia", "41234"));
-				add(new Address("140 N. Baton", "Baton Rouge", "LA", "33556"));
-				add(new Address("200 Venice Dr.", "Los Angeles", "CA", "93736"));
-				add(new Address("135 Channing Ave", "Palo Alto", "CA", "94301"));
-				add(new Address("42 W 2nd ", "Fairfield", "IA", "52556"));
-				add(new Address("501 Mountain", "Mountain View", "CA", "94707"));
-			}
-		};
-
-		List<Author> allAuthors = new ArrayList<Author>() {
-			{
-				add(new Author("Tom", "Thomas", "641-123-456", addresses.get(0),
-						"Don’t think for a second that I actually care what you have to say."));
-				add(new Author("Peter", "Thomas", "641-333-4444", addresses.get(0), "Every storm runs out of rain."));
-				add(new Author("Maryam", "Pugh", "641-222-1111", addresses.get(1),
-						"Have lots of hair and like ugly things."));
-				add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2),
-						"I have this new theory that human adolescence doesn’t end until your early thirties."));
-				add(new Author("Sarah", "Connor", "123-422-2663", addresses.get(3),
-						"I always feel sad for seedless watermelons, because what if they wanted babies?"));
-			}
-		};
-
+		
 		ObservableList<Author> authors = FXCollections.observableArrayList(allAuthors);
 
 		lvwAuthor.setItems(authors);
@@ -116,7 +114,6 @@ public class AddBookController implements Initializable {
 							setText(t.getFirstName() + " " + t.getLastName());
 						}
 					}
-
 				};
 
 				return cell;
@@ -131,6 +128,43 @@ public class AddBookController implements Initializable {
 		String maxCheckoutLength = txtMaxCheckoutLength.getText();
 
 		checkAllRule();
+		if("update".equals(btnUpdate.getText().toLowerCase())){
+			updateBook(isbn, title, maxCheckoutLength);
+		}
+		else{	
+			addNewBook(isbn, title, maxCheckoutLength);
+		}			
+	}
+	
+	private void updateBook(String isbn, String title, String maxCheckoutLength) {
+		try {
+			BookBusiness bookBusiness = new BookBusiness();
+			Book book = bookBusiness.searchBy(isbn);
+			if (book != null) {
+
+				try {
+					List<Author> selectedItems = lvwAuthor.getSelectionModel().getSelectedItems();
+					Author[] authors = selectedItems.toArray(new Author[] {});
+
+					bookBusiness.updateMemberInfo(isbn, title, Integer.parseInt(maxCheckoutLength), Arrays.asList(authors));
+					Stage stage = (Stage) btnClose.getScene().getWindow();
+					stage.close();
+					AllBookController controller = new AllBookController();
+					controller.viewDetails();
+				} catch (LibrarySystemException ex) {
+					ex.printStackTrace();
+				}
+			} else {
+				Dialog.showErrorDialog("Error", null, "This book is not exist in system.");
+			}
+
+			return;
+		} catch (Exception ex) {
+			logger.log(Level.SEVERE, null, ex);
+		}
+	}
+
+	private void addNewBook(String isbn, String title, String maxCheckoutLength) {
 		try {
 			BookBusiness bookBusiness = new BookBusiness();
 			Book book = bookBusiness.searchBy(isbn);
@@ -141,7 +175,7 @@ public class AddBookController implements Initializable {
 					Author[] authors = selectedItems.toArray(new Author[] {});
 
 					bookBusiness.addBook(isbn, title, Integer.parseInt(maxCheckoutLength), Arrays.asList(authors));
-					Stage stage = (Stage) btnUpdate.getScene().getWindow();
+					Stage stage = (Stage) btnClose.getScene().getWindow();
 					stage.close();
 					AllBookController controller = new AllBookController();
 					controller.viewDetails();
@@ -156,7 +190,6 @@ public class AddBookController implements Initializable {
 		} catch (Exception ex) {
 			logger.log(Level.SEVERE, null, ex);
 		}
-
 	}
 
 	@FXML
@@ -169,6 +202,8 @@ public class AddBookController implements Initializable {
 		try {
 			if (isAnyEmpty())
 				throw new LibrarySystemException("All fields must be nonempty");
+			if (!RuleSetFactory.isExactLength(txtIsbn.getText(), 7))
+				throw new LibrarySystemException("ISBN field must be exactly 7 digits");
 		} catch (LibrarySystemException e) {
 			Dialog.showWarningDialog("Error", null, e.getMessage());
 		}
@@ -181,10 +216,23 @@ public class AddBookController implements Initializable {
 	}
 
 	public void viewDetails(Book book) {
+		btnSave.setText("Update");
 		txtIsbn.setText(book.getIsbn());
 		txtTitle.setText(book.getTitle());
-		txtMaxCheckoutLength.setText(""+book.getMaxCheckoutLength());
-		//lvwAuthor.setSelectionModel((MultipleSelectionModel<Author>) book.getAuthors());
-		
+		txtMaxCheckoutLength.setText(""+book.getMaxCheckoutLength());		
+		int[] indices = getIndices(book.getAuthors());
+		if(indices.length > 0){
+			lvwAuthor.getSelectionModel().selectIndices(indices[0], indices);
+		}	
+	}
+
+	private int[] getIndices(List<Author> list) {
+		int[] indices = new int[list.size()];
+		for (int i = 0, k = 0; i < allAuthors.size(); i++) {
+			if(list.contains(allAuthors.get(i))){
+				indices[k++] = i;				
+			}			
+		}
+		return indices;
 	}
 }

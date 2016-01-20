@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import model.Author;
 import model.Book;
 import model.CheckoutRecord;
@@ -56,16 +55,22 @@ public class BookBusiness {
 		}
 		return list;
 	}		
-	
-	/**
-	 * Looks up book by isbn to see if it exists, throw exception.
-	 * Else add the book to storage
-	 */
+
 	public boolean addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) 
 			throws LibrarySystemException {
 		Book book = searchBy(isbn);
 		if(book != null) throw new LibrarySystemException("Book with isbn " + isbn 
 			+ " is already in the library collection!");
+		BookRepository repositoty = new BookRepository();
+		repositoty.save(new Book(isbn, title, maxCheckoutLength, authors));
+		return true;
+	}
+	
+	public boolean updateMemberInfo(String isbn, String title, int maxCheckoutLength, List<Author> authors) 
+			throws LibrarySystemException {
+		Book book = searchBy(isbn);
+		if(book == null) throw new LibrarySystemException("Book with isbn " + isbn 
+			+ " is  not already in the library collection!");
 		BookRepository repositoty = new BookRepository();
 		repositoty.save(new Book(isbn, title, maxCheckoutLength, authors));
 		return true;
@@ -77,6 +82,15 @@ public class BookBusiness {
 			+ " is in the library collection!");
 		book.addCopy();
 		return true;
+	}
+	
+	public CheckoutRecord getCheckoutRecordByMemberId(String memberId) throws LibrarySystemException {
+		MemberRepository repository = new MemberRepository();
+		LibraryMember member = repository.findBy(memberId);
+		if (member == null) {
+			throw new LibrarySystemException("This memberId " + memberId + "doesn't exist!");
+		}
+		return member.getRecord();
 	}
 	
 	public CopyStatus computeStatus(BookCopy copy) {

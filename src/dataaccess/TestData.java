@@ -22,11 +22,11 @@ public class TestData {
 	List<Address> addresses = new ArrayList<Address>() {
 		{
 			add(new Address("1000 N 4th", "Fairfield", "IA", "52557"));
-			add(new Address("500 S. George", "Kansas City", "MI", "65434"));
+			add(new Address("500 S. Washington", "Kansas City", "MI", "65434"));
 			add(new Address("213 W. Ave", "Seville", "Georgia", "41234"));
-			add(new Address("140 N. Baton", "Baton Rouge", "LA", "33556"));
+			add(new Address("140 N. Baton", "Baton Rouge", "TX", "33556"));
 			add(new Address("200 Venice Dr.", "Los Angeles", "CA", "93736"));
-			add(new Address("135 Channing Ave", "California", "CA", "94301"));
+			add(new Address("135 New York Ave", "California", "CA", "94301"));
 			add(new Address("42 W 2nd ", "Fairfield", "IA", "52556"));
 			add(new Address("501 Mountain", "Mountain View", "CA", "94707"));
 		}
@@ -35,14 +35,13 @@ public class TestData {
 	@SuppressWarnings("serial")
 	public List<Author> authors = new ArrayList<Author>() {
 		{
-			add(new Author("Tom", "Thomas", "641-123-456", addresses.get(0), "Don’t think for a second that I actually care what you have to say."));
-			add(new Author("Peter", "Thomas", "641-333-4444", addresses.get(0), "Every storm runs out of rain."));
-			add(new Author("Maryam", "Pugh", "641-222-1111", addresses.get(1), "Have lots of hair and like ugly things."));
-			add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2), "I have this new theory that human adolescence doesn’t end until your early thirties."));
-			add(new Author("Sarah", "Connor", "123-422-2663", addresses.get(3), "I always feel sad for seedless watermelons, because what if they wanted babies?"));
+			add(new Author("Tom", "Thomas", "641123456", addresses.get(0), "Don’t think for a second that I actually care what you have to say."));
+			add(new Author("Peter", "Thomas", "6413334444", addresses.get(0), "Every storm runs out of rain."));
+			add(new Author("Maryam", "Pugh", "6412221111", addresses.get(1), "Have lots of hair and like ugly things."));
+			add(new Author("Andrew", "Cleveland", "9764452232", addresses.get(2), "I have this new theory that human adolescence doesn’t end until your early thirties."));
+			add(new Author("Sarah", "Connor", "1234222663", addresses.get(3), "I always feel sad for seedless watermelons, because what if they wanted babies?"));
 		}
-	};
-	
+	};	
 	
 	@SuppressWarnings("serial")
 	List<Book> books = new ArrayList<Book>() {
@@ -52,8 +51,7 @@ public class TestData {
 			add(new Book("4422223", "Thinking Java", 21, Arrays.asList(authors.get(3))));
 			add(new Book("4853455", "Business Administor", 7, Arrays.asList(authors.get(4))));
 		}
-	};
-	
+	};	
 	
 	@SuppressWarnings("serial")
 	List<CheckoutRecordEntry> checkoutRecordEntries = new ArrayList<CheckoutRecordEntry>() {
@@ -105,22 +103,22 @@ public class TestData {
 	}
 
 	public void generateLibraryMemberData() {
-		LibraryMember libraryMember = new LibraryMember("1001", "Long", "Huynh", "641-123-4567", addresses.get(0));
+		LibraryMember libraryMember = new LibraryMember("984850", "Long", "Huynh", "6411234567", addresses.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1002", "Achyut", "Devkota", "702-998-2414", addresses.get(5));
+		libraryMember = new LibraryMember("984976", "Achyut", "Devkota", "7029982414", addresses.get(5));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(2));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1003", "Amit", "Niroula", "451-234-8811", addresses.get(6));
+		libraryMember = new LibraryMember("984992", "Amit", "Niroula", "4512348811", addresses.get(6));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		members.add(libraryMember);
 		
-		libraryMember = new LibraryMember("1004", "Sarah", "Obama", "451-234-8811", addresses.get(1));
+		libraryMember = new LibraryMember("984990", "Sarah", "Obama", "4512348811", addresses.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		members.add(libraryMember);

@@ -86,6 +86,7 @@ public class AllMemberController implements Initializable {
 		customTextField.clearTextFieldByButton(txtState, btnClearState);
 		customTextField.clearTextFieldByButton(txtZip, btnClearZip);
 		customTextField.numaricTextfield(txtZip);
+		customTextField.numaricTextfield(txtPhoneNumber);
 	}
 
 	@FXML
@@ -193,7 +194,7 @@ public class AllMemberController implements Initializable {
 		clearAll();
 		btnUpdate.setDisable(false);
 		btnUpdate.setText("Save");
-		String memberId = RandomIdGenarator.randomString();
+		String memberId = RandomIdGenarator.randomString(6,6);
 		txtMemberId.setText(memberId);
 	}	
 	
@@ -223,16 +224,19 @@ public class AllMemberController implements Initializable {
 				throw new LibrarySystemException("All fields must be nonempty");
 
 			if (!RuleSetFactory.isNumeric(memberId))
-				throw new LibrarySystemException("Id field must be numeric");
-			if (!RuleSetFactory.isAllLetters(firstName) || !RuleSetFactory.isAllLetters(lastName))
-				throw new LibrarySystemException("First Name field must be all letters");
+				throw new LibrarySystemException("Member Id field must be numeric");
+			if (!RuleSetFactory.isAllLetters(firstName))
+				throw new LibrarySystemException("First Name field must be all letters and no space");
+			if (!RuleSetFactory.isAllLetters(lastName))
+				throw new LibrarySystemException("Last Name field must be all letters and no space");
 			if (!RuleSetFactory.isNumeric(zip))
-				throw new LibrarySystemException("Zip field must be numeric");
+				throw new LibrarySystemException("Zip code field must be numeric");
 			if (!RuleSetFactory.isExactLength(zip, 5))
 				throw new LibrarySystemException("Zip field must be exactly 5 digits");
 			if (!RuleSetFactory.isExactLength(state, 2))
 				throw new LibrarySystemException("State field must be exactly 2 digits");
-
+			if (!RuleSetFactory.isExactLength(telephone, 10))
+				throw new LibrarySystemException("Phone Number field must be exactly 10 digits");
 			if (!RuleSetFactory.isAllCapitals(state))
 				throw new LibrarySystemException("State field must be in the range A-Z");	
 		} catch (LibrarySystemException e) {
