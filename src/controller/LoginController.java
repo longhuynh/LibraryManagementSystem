@@ -76,7 +76,7 @@ public class LoginController implements Initializable {
         Scene adminPanelScene = new Scene(parent);
         Stage adminPanelStage = new Stage();
         adminPanelStage.setMaximized(true);
-
+        
         if (isValidCondition()) {
            try {      
         	   String memberId = txtUserName.getText();
@@ -92,7 +92,7 @@ public class LoginController implements Initializable {
 	        	   
 	               adminPanelStage.setScene(adminPanelScene);
 	               adminPanelStage.getIcons().add(new Image("/image/icon.png"));
-	               adminPanelStage.setTitle("Welcome [" + user.getId() + "] to Library Management System");
+	               adminPanelStage.setTitle("Welcome [" + user.getUserName() + "] to Library Management System");
 	               adminPanelStage.show();
 	
 	               Stage stage = (Stage) btnLogin.getScene().getWindow();

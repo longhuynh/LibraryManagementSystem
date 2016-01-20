@@ -18,6 +18,7 @@ final public class Book implements Serializable, Cloneable {
 	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
 		this.isbn = isbn;
 		this.title = title;
+		this.maxCheckoutLength = maxCheckoutLength;
 		this.authors = Collections.unmodifiableList(authors);
 		this.copies = new BookCopy[] { new BookCopy(this, 1, true) };
 	}

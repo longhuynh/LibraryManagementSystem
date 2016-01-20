@@ -1,22 +1,32 @@
 package business;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import model.Address;
 import model.LibraryMember;
-import model.Role;
 import repository.MemberRepository;
 import util.LibrarySystemException;
 
-public class MemberBusiness implements IMemberBusiness {
+public class MemberBusiness {
 
 	public List<LibraryMember> getAll(){
 		MemberRepository repositoty = new MemberRepository();
 		List<LibraryMember> list = new ArrayList<LibraryMember>(repositoty.getAll().values());
 		return list;
-	}
+	}	
 	
+	public List<LibraryMember> search(String searchString){
+		MemberRepository repositoty = new MemberRepository();
+		List<LibraryMember> list = new ArrayList<LibraryMember>();
+		List<LibraryMember> members = new ArrayList<LibraryMember>(repositoty.getAll().values());
+		for(LibraryMember member : members){
+			if(member.getFirstName().toLowerCase().contains(searchString.toLowerCase())
+				||member.getLastName().toLowerCase().contains(searchString.toLowerCase())){
+				list.add(member);
+			}
+		}
+		return list;
+	}	
 	
 	public void addNewMember(String memberId, String firstName, String lastName,
 			String telephone, Address address) throws LibrarySystemException {

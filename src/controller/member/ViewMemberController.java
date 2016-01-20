@@ -5,37 +5,23 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
-
-import javafx.event.ActionEvent;
-import javafx.event.Event;
+import javafx.event.ActionEvent;import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-
 import custom.*;
-
-import java.awt.Component;
-import java.io.FileNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import model.Address;
 import model.LibraryMember;
-import model.Role;
-import model.User;
 import util.LibrarySystemException;
 import util.RandomIdGenarator;
 import util.RuleSetFactory;
 import business.MemberBusiness;
-import business.UserBusineess;
-import controller.ApplicationController;
 import controller.Dialog;
-import controller.LoginController;
 
 public class ViewMemberController implements Initializable {
 	private static final Logger logger = Logger.getLogger(ViewMemberController.class.getName());
@@ -93,18 +79,21 @@ public class ViewMemberController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		customTextField.clearTextFieldByButton(txtFirstName, btnClearFirstName);
 		customTextField.clearTextFieldByButton(txtLastName, btnClearLastName);
-		customTextField.clearTextFieldByButton(txtPhoneNumber, btnClearPhoneNumber);
+		customTextField.clearTextFieldByButton(txtPhoneNumber, btnClearPhoneNumber);	
+		
 		customTextField.clearTextFieldByButton(txtCity, btnClearCity);
 		customTextField.clearTextFieldByButton(txtStreet, btnClearStreet);
 		customTextField.clearTextFieldByButton(txtState, btnClearState);
 		customTextField.clearTextFieldByButton(txtZip, btnClearZip);
-		// customTextField.numaricTextfield(txtStreet);
-
+		customTextField.numaricTextfield(txtZip);
 	}
 
 	@FXML
 	private void onActionSearch(ActionEvent event) {
-
+		String searchString = txtSearch.getText();
+		MemberBusiness memberBusiness = new MemberBusiness();
+		members = FXCollections.observableArrayList(memberBusiness.search(searchString));
+		tblMember.setItems(members);
 	}
 
 	@FXML
@@ -144,8 +133,7 @@ public class ViewMemberController implements Initializable {
 	}
 
 	private void updateMember(String memberId, String firstName, String lastName, String telephone, Address address) {
-		try {
-			
+		try {			
 			MemberBusiness memberBusiness = new MemberBusiness();
 			memberBusiness.updateMemberInfo(memberId, firstName, lastName, telephone, address);
 			int selectedIndex = tblMember.getSelectionModel().getSelectedIndex();
@@ -173,6 +161,7 @@ public class ViewMemberController implements Initializable {
 
 	public void setselectedView() {
 		clearAll();
+		btnUpdate.setDisable(false);
 		btnUpdate.setText("Update");
 		LibraryMember member = tblMember.getSelectionModel().getSelectedItem();
 		if (member != null) {
@@ -191,6 +180,7 @@ public class ViewMemberController implements Initializable {
 
 	public void showDetails() {
 		btnUpdate.setText("Update");
+		btnUpdate.setDisable(true);
 		MemberBusiness memberBusiness = new MemberBusiness();
 		members = FXCollections.observableArrayList(memberBusiness.getAll());
 		tblMember.setItems(members);
@@ -201,6 +191,7 @@ public class ViewMemberController implements Initializable {
 	
 	public void createNewMeber() {
 		clearAll();
+		btnUpdate.setDisable(false);
 		btnUpdate.setText("Save");
 		String memberId = RandomIdGenarator.randomString();
 		txtMemberId.setText(memberId);
