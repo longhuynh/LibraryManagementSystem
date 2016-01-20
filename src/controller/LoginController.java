@@ -6,8 +6,10 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import custom.*;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +37,8 @@ import javafx.scene.image.Image;
 public class LoginController implements Initializable {
 	private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 	
+	@FXML
+    private Label lblLoginFailed;
     @FXML
     private TextField txtUserName;
     @FXML

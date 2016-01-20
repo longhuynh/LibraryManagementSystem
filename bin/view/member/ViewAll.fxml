@@ -56,7 +56,7 @@
 										<Label text="First Name:" GridPane.rowIndex="2" />
 										<Label text="Last Name:" GridPane.rowIndex="4" />
 										<Label text="Phone Number :" GridPane.rowIndex="6" />
-										<Label text="Role :" GridPane.rowIndex="8" />
+										
 										<Label text="Street:" GridPane.columnIndex="3" />
 										<Label text="City:" GridPane.columnIndex="3"
 											GridPane.rowIndex="2" />
@@ -70,10 +70,8 @@
 											GridPane.rowIndex="3" />
 										<TextField fx:id="txtLastName" GridPane.columnSpan="2"
 											GridPane.rowIndex="5" />
-										<TextField fx:id="txtPhoneNumber"
-											GridPane.columnSpan="2" GridPane.rowIndex="7" />
-										<ComboBox fx:id="cboRole" prefHeight="25.0"
-											prefWidth="220.0" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+										<TextField fx:id="txtPhoneNumber" 
+											GridPane.columnSpan="2" GridPane.rowIndex="7" />									
 										<TextField fx:id="txtStreet" GridPane.columnIndex="3"
 											GridPane.columnSpan="2" GridPane.rowIndex="1" />
 										<TextField fx:id="txtCity" GridPane.columnIndex="3"

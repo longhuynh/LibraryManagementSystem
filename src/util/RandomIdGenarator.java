@@ -2,7 +2,7 @@ package util;
 
 public class RandomIdGenarator {
 	@SuppressWarnings("deprecation")
-	public static String randomstring(int lo, int hi) {
+	public static String randomString(int lo, int hi) {
 		int n = rand(lo, hi);
 		byte b[] = new byte[n];
 		for (int i = 0; i < n; i++)
@@ -19,8 +19,8 @@ public class RandomIdGenarator {
 		return lo + i;
 	}
 
-	public static String randomstring() {
-		return randomstring(5, 5);
+	public static String randomString() {
+		return randomString(4, 4);
 	}
 
 }

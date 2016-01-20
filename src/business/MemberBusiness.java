@@ -19,7 +19,7 @@ public class MemberBusiness implements IMemberBusiness {
 	
 	
 	public void addNewMember(String memberId, String firstName, String lastName,
-			String telephone, Address address, Role role) throws LibrarySystemException {
+			String telephone, Address address) throws LibrarySystemException {
 		LibraryMember member = findBy(memberId);
 		if(member != null) {
 			throw new LibrarySystemException("A library member with memberId = " + memberId + " already exists!"); 
@@ -35,7 +35,7 @@ public class MemberBusiness implements IMemberBusiness {
 	}
 
 	public void updateMemberInfo(String memberId, String firstName, String lastName,
-		String telephone, Address address, Role role) throws LibrarySystemException {
+		String telephone, Address address) throws LibrarySystemException {
 		LibraryMember member = findBy(memberId);
 		if(member == null) {
 			throw new LibrarySystemException("No library member with memberId = " + memberId + " found!"); 
