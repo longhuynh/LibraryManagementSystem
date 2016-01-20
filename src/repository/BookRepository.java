@@ -6,7 +6,6 @@ import java.util.List;
 import dataaccess.DataAccess;
 import model.StorageType;
 import model.Book;
-import model.LibraryMember;
 
 public class BookRepository implements IBaseRepository<Book>{
 	private static HashMap<String,Book> books;	

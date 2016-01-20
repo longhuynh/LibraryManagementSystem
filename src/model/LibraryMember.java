@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class LibraryMember extends Person implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 258745813979930997L;
 	private String memberId;	
 	private CheckoutRecord record = new CheckoutRecord();
 

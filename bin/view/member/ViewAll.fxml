@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="604.0" prefWidth="877.0"
 	stylesheets="/style/MainStyle.css" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.member.ViewMemberController">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.member.AllMemberController">
 	<children>
 		<BorderPane layoutX="294.0" layoutY="147.0" prefHeight="604.0"
 			prefWidth="877.0" AnchorPane.bottomAnchor="0.0"
@@ -120,7 +120,7 @@
 											GridPane.columnIndex="1" GridPane.columnSpan="3"
 											GridPane.rowIndex="12" GridPane.rowSpan="3">
 											<children>
-												<Button fx:id="btnUpdate" layoutX="118.0" layoutY="31.0"
+												<Button fx:id="btnUpdate" layoutX="118.0" disable="true" layoutY="31.0"
 													mnemonicParsing="false" onAction="#onClickUpdateButton"
 													prefHeight="25.0" prefWidth="119.0" text="Update" />
 											</children>

@@ -22,11 +22,11 @@ public class TestData {
 	List<Address> addresses = new ArrayList<Address>() {
 		{
 			add(new Address("1000 N 4th", "Fairfield", "IA", "52557"));
-			add(new Address("500 S. George", "Georgetown", "MI", "65434"));
-			add(new Address("213 Headley Ave", "Seville", "Georgia", "41234"));
+			add(new Address("500 S. George", "Kansas City", "MI", "65434"));
+			add(new Address("213 W. Ave", "Seville", "Georgia", "41234"));
 			add(new Address("140 N. Baton", "Baton Rouge", "LA", "33556"));
 			add(new Address("200 Venice Dr.", "Los Angeles", "CA", "93736"));
-			add(new Address("135 Channing Ave", "Palo Alto", "CA", "94301"));
+			add(new Address("135 Channing Ave", "California", "CA", "94301"));
 			add(new Address("42 W 2nd ", "Fairfield", "IA", "52556"));
 			add(new Address("501 Mountain", "Mountain View", "CA", "94707"));
 		}
@@ -47,10 +47,10 @@ public class TestData {
 	@SuppressWarnings("serial")
 	List<Book> books = new ArrayList<Book>() {
 		{
-			add(new Book("23-12345", "Java Progrming", 21, Arrays.asList(authors.get(0), authors.get(1))));
-			add(new Book("28-12331", ".NET from begining", 7, Arrays.asList(authors.get(2))));
-			add(new Book("44-22223", "Thinking Java", 21, Arrays.asList(authors.get(3))));
-			add(new Book("48-53455", "Business Administor", 7, Arrays.asList(authors.get(4))));
+			add(new Book("2312345", "Java Progrming", 21, Arrays.asList(authors.get(0), authors.get(1))));
+			add(new Book("2812331", ".NET from begining", 7, Arrays.asList(authors.get(2))));
+			add(new Book("4422223", "Thinking Java", 21, Arrays.asList(authors.get(3))));
+			add(new Book("4853455", "Business Administor", 7, Arrays.asList(authors.get(4))));
 		}
 	};
 	

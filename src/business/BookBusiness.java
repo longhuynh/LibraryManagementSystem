@@ -15,10 +15,12 @@ import repository.MemberRepository;
 import model.BookCopy;
 import util.LibrarySystemException;
 
-public class BookBusineess implements IBookBusiness {
-	public HashMap<String, Book> getAll(){
+public class BookBusiness {
+	
+	public List<Book> getAll(){
 		BookRepository repositoty = new BookRepository();
-		return repositoty.getAll();
+		List<Book> list = new ArrayList<Book>(repositoty.getAll().values());
+		return list;
 	}
 	
 	public void checkoutBook(String memberId, String isbn) throws LibrarySystemException {
@@ -26,7 +28,7 @@ public class BookBusineess implements IBookBusiness {
 		LibraryMember member = memberBusiness.findBy(memberId);
 		
 		if(member == null) throw new LibrarySystemException("Library member with ID " + memberId + " not found!");
-		Book book = searchBook(isbn);
+		Book book = searchBy(isbn);
 		if(book == null || !book.isAvailable()) throw new LibrarySystemException(
 				"Book with ISBN = " + isbn + " is not available for checkout!");
 		BookCopy copy = book.getNextAvailableCopy();
@@ -38,10 +40,22 @@ public class BookBusineess implements IBookBusiness {
 		repositoty.save(member);
 	}
 	
-	public Book searchBook(String isbn) {
+	public Book searchBy(String isbn) {
 		BookRepository repositoty = new BookRepository();
 		return repositoty.findBy(isbn);
 	}
+	
+	public List<Book> search(String searchString){
+		BookRepository repositoty = new BookRepository();
+		List<Book> list = new ArrayList<Book>();
+		List<Book> books = new ArrayList<Book>(repositoty.getAll().values());
+		for(Book book : books){
+			if(book.getTitle().toLowerCase().contains(searchString.toLowerCase())){
+				list.add(book);
+			}
+		}
+		return list;
+	}		
 	
 	/**
 	 * Looks up book by isbn to see if it exists, throw exception.
@@ -49,8 +63,8 @@ public class BookBusineess implements IBookBusiness {
 	 */
 	public boolean addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) 
 			throws LibrarySystemException {
-		Book test = searchBook(isbn);
-		if(test != null) throw new LibrarySystemException("Book with isbn " + isbn 
+		Book book = searchBy(isbn);
+		if(book != null) throw new LibrarySystemException("Book with isbn " + isbn 
 			+ " is already in the library collection!");
 		BookRepository repositoty = new BookRepository();
 		repositoty.save(new Book(isbn, title, maxCheckoutLength, authors));
@@ -58,7 +72,7 @@ public class BookBusineess implements IBookBusiness {
 	}
 	
 	public boolean addBookCopy(String isbn) throws LibrarySystemException {
-		Book book = searchBook(isbn);
+		Book book = searchBy(isbn);
 		if(book == null) throw new LibrarySystemException("No book with isbn " + isbn 
 			+ " is in the library collection!");
 		book.addCopy();

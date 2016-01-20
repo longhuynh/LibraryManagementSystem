@@ -21,9 +21,10 @@
 						<AnchorPane fx:id="apDesignPane" prefHeight="384.0" prefWidth="668.0">
 							<children>
 
-								<AnchorPane layoutX="381.0" layoutY="52.0" prefHeight="280.0" prefWidth="290.0" style="-fx-background-color: white;">
+
+								<AnchorPane layoutX="381.0" layoutY="52.0" prefHeight="280.0" prefWidth="290.0" style="-fx-background-color: rgba(255, 255, 255,0.5);">
 									<children>
-										<Label layoutX="80.0" layoutY="14.0" text="SIGN IN">
+										<Label layoutX="80.0" layoutY="14.0" text="SIGN IN" textFill="#030000">
 											<font>
 												<Font name="DejaVu Sans Bold" size="29.0" />
 											</font>
@@ -39,18 +40,25 @@
 												<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 											</rowConstraints>
 											<children>
-												<TextField fx:id="txtUserName"  onAction="#onHitEnterUserNameField" promptText="User Name" GridPane.columnSpan="2" />
+												<TextField fx:id="txtUserName" onAction="#onHitEnterUserNameField" promptText="User Name" GridPane.columnSpan="2">
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding></TextField>
 												<PasswordField fx:id="pwfUserPassword" onAction="#onHitEnterPasswordField" promptText="Password" GridPane.columnSpan="2" GridPane.rowIndex="1" />
 												<Button fx:id="btnClearUserNameField" mnemonicParsing="false" prefHeight="31.0" prefWidth="29.0" stylesheets="@../style/btnOnText.css" GridPane.columnSpan="2" GridPane.halignment="RIGHT" />
 												<Button fx:id="btnClearPasswordField" mnemonicParsing="false" prefHeight="31.0" prefWidth="29.0" stylesheets="@../style/btnOnText.css" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
 											</children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
 										</GridPane>
 										<Button fx:id="btnLogin" layoutX="96.0" layoutY="203.0" mnemonicParsing="false" onAction="#onClickButtonLogin" text="Log In" />
                               <Label fx:id="lblLoginFailed" visible="false" contentDisplay="CENTER" layoutX="34.0" layoutY="249.0" text="Please check your user name or password." textFill="#f10707" />
+
 									</children>
 								</AnchorPane>
-								<ImageView fitHeight="300.0" fitWidth="300.0" layoutX="60.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
-									<image>
+								<ImageView fitHeight="253.0" fitWidth="319.0" layoutX="62.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+								<image>
 										<Image url="@../image/library.png" />
 									</image>
 								</ImageView>

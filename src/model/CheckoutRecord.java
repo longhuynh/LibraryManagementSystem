@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 final public class CheckoutRecord implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3717821819154967735L;
 	private ArrayList<CheckoutRecordEntry> entries = new ArrayList<>();
 	
 	public CheckoutRecord() {}	

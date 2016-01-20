@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 final public class Book implements Serializable, Cloneable {
-
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7264854361540907943L;
 	private BookCopy[] copies;
 	private List<Author> authors;
 	private String isbn;
@@ -18,6 +17,7 @@ final public class Book implements Serializable, Cloneable {
 	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
 		this.isbn = isbn;
 		this.title = title;
+		this.maxCheckoutLength = maxCheckoutLength;
 		this.authors = Collections.unmodifiableList(authors);
 		this.copies = new BookCopy[] { new BookCopy(this, 1, true) };
 	}
@@ -32,10 +32,10 @@ final public class Book implements Serializable, Cloneable {
 	}
 
 	public void addCopy() {
-		BookCopy[] newArr = new BookCopy[copies.length + 1];
-		System.arraycopy(copies, 0, newArr, 0, copies.length);
-		newArr[copies.length] = new BookCopy(this, copies.length + 1, true);
-		copies = newArr;
+		BookCopy[] newBooks = new BookCopy[copies.length + 1];
+		System.arraycopy(copies, 0, newBooks, 0, copies.length);
+		newBooks[copies.length] = new BookCopy(this, copies.length + 1, true);
+		copies = newBooks;
 	}
 
 	@Override
