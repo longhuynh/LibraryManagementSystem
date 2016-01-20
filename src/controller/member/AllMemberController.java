@@ -5,7 +5,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;import javafx.event.Event;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -79,8 +80,8 @@ public class AllMemberController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		customTextField.clearTextFieldByButton(txtFirstName, btnClearFirstName);
 		customTextField.clearTextFieldByButton(txtLastName, btnClearLastName);
-		customTextField.clearTextFieldByButton(txtPhoneNumber, btnClearPhoneNumber);	
-		
+		customTextField.clearTextFieldByButton(txtPhoneNumber, btnClearPhoneNumber);
+
 		customTextField.clearTextFieldByButton(txtCity, btnClearCity);
 		customTextField.clearTextFieldByButton(txtStreet, btnClearStreet);
 		customTextField.clearTextFieldByButton(txtState, btnClearState);
@@ -123,36 +124,36 @@ public class AllMemberController implements Initializable {
 		String state = txtState.getText();
 		String zip = txtZip.getText();
 		Address address = new Address(street, city, state, zip);
-		checkAllRule();
-		if("update".equals(btnUpdate.getText().toLowerCase())){
-			updateMember(memberId, firstName, lastName, telephone, address);
+		if (checkAllRule()) {
+			if ("update".equals(btnUpdate.getText().toLowerCase())) {
+				updateMember(memberId, firstName, lastName, telephone, address);
+			} else {
+				addNewMember(memberId, firstName, lastName, telephone, address);
+			}
 		}
-		else{	
-			addNewMember(memberId, firstName, lastName, telephone, address);
-		}	
-		
 	}
 
 	private void updateMember(String memberId, String firstName, String lastName, String telephone, Address address) {
-		try {			
+		try {
 			MemberBusiness memberBusiness = new MemberBusiness();
 			memberBusiness.updateMemberInfo(memberId, firstName, lastName, telephone, address);
 			int selectedIndex = tblMember.getSelectionModel().getSelectedIndex();
 			showDetails();
+			tblMember.requestFocus();
 			tblMember.getSelectionModel().selectIndices(selectedIndex);
+			tblMember.getFocusModel().focus(selectedIndex);
 			return;
 		} catch (Exception ex) {
 			logger.log(Level.SEVERE, null, ex);
 		}
 	}
-	
 
 	private void addNewMember(String memberId, String firstName, String lastName, String telephone, Address address) {
-		try {		
+		try {
 			MemberBusiness memberBusiness = new MemberBusiness();
-			memberBusiness.addNewMember(memberId, firstName, lastName, telephone, address);			
+			memberBusiness.addNewMember(memberId, firstName, lastName, telephone, address);
 			showDetails();
-			LibraryMember member = memberBusiness.findBy(memberId); 
+			LibraryMember member = memberBusiness.findBy(memberId);
 			tblMember.getSelectionModel().select(member);
 			return;
 		} catch (Exception ex) {
@@ -189,15 +190,15 @@ public class AllMemberController implements Initializable {
 		clmFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		clmLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 	}
-	
+
 	public void generateCreateNewMeber() {
 		clearAll();
 		btnUpdate.setDisable(false);
 		btnUpdate.setText("Save");
-		String memberId = RandomIdGenarator.randomString(6,6);
+		String memberId = RandomIdGenarator.randomString(6, 6);
 		txtMemberId.setText(memberId);
-	}	
-	
+	}
+
 	private void clearAll() {
 		txtMemberId.clear();
 		txtFirstName.clear();
@@ -207,8 +208,8 @@ public class AllMemberController implements Initializable {
 		txtLastName.clear();
 		txtCity.clear();
 	}
-	
-	private void checkAllRule() {
+
+	private boolean checkAllRule() {
 		try {
 			String memberId = txtMemberId.getText();
 			String firstName = txtFirstName.getText();
@@ -220,7 +221,7 @@ public class AllMemberController implements Initializable {
 			String state = txtState.getText();
 			String zip = txtZip.getText();
 
-			if (isAnyEmpty(firstName, lastName, telephone, street,city,state, zip ))
+			if (isAnyEmpty(firstName, lastName, telephone, street, city, state, zip))
 				throw new LibrarySystemException("All fields must be nonempty");
 
 			if (!RuleSetFactory.isNumeric(memberId))
@@ -238,15 +239,17 @@ public class AllMemberController implements Initializable {
 			if (!RuleSetFactory.isExactLength(telephone, 10))
 				throw new LibrarySystemException("Phone Number field must be exactly 10 digits");
 			if (!RuleSetFactory.isAllCapitals(state))
-				throw new LibrarySystemException("State field must be in the range A-Z");	
+				throw new LibrarySystemException("State field must be in the range A-Z");
 		} catch (LibrarySystemException e) {
-			Dialog.showWarningDialog("Error", null, e.getMessage());			
+			Dialog.showWarningDialog("Error", null, e.getMessage());
+			return false;
 		}
+		return true;
 	}
-	
-	private boolean isAnyEmpty(String firstName, String lastName, String telephone, String street, String city, String state, String zip) {	
-		return firstName.isEmpty() || lastName.isEmpty() ||telephone.isEmpty()
-				|| state.isEmpty() || street.isEmpty() 
+
+	private boolean isAnyEmpty(String firstName, String lastName, String telephone, String street, String city,
+			String state, String zip) {
+		return firstName.isEmpty() || lastName.isEmpty() || telephone.isEmpty() || state.isEmpty() || street.isEmpty()
 				|| city.isEmpty() || zip.isEmpty();
 	}
 }

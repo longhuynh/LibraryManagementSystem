@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -136,11 +138,19 @@ public class ApplicationController implements Initializable {
 
     @FXML
     private void btnLogOut(ActionEvent event) throws IOException {
-        stackPaneContent.getChildren().clear();
-        stackPaneContent.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Login.fxml")));
-        acDashBord.getChildren().clear();
-        acHead.getChildren().clear();
-        acHead.setMaxHeight(0.0);
+    	Stage stage = (Stage) btnHome.getScene().getWindow();
+		stage.close();
+		
+    	Stage primaryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        Scene scene = new Scene(root);        
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Welcome to Library Management System - Login");
+        primaryStage.getIcons().add(new Image("/image/icon.png"));
+        primaryStage.setMaximized(false);
+        primaryStage.setMinHeight(500.0);
+        primaryStage.setMinWidth(850.0);
+        primaryStage.show();
     }
 
     @FXML
@@ -216,9 +226,7 @@ public class ApplicationController implements Initializable {
         if (Role.LIBRARIAN.equals(role)) {
             btnMember.setDisable(true);
         }
-        if (Role.ADMIN.equals(role)) {
-            btnBook.setDisable(true);
-        } else {
+        else {
 
         }       
     }

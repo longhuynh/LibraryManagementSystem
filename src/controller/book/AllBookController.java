@@ -34,6 +34,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Book;
+import model.Role;
 
 /**
  *
@@ -49,7 +50,7 @@ public class AllBookController implements Initializable {
 	@FXML
 	private Button btnAdd;
 	@FXML
-	private Button btnUpdate;
+	private Button btnCopy;
 	@FXML
 	private Button btnCheckout;
 	@FXML
@@ -200,5 +201,18 @@ public class AllBookController implements Initializable {
 		books = FXCollections.observableArrayList(bookBusiness.getAll());
 		tblBook.setItems(books);
 	}
+	
+	 public void setPermission(Role role) {
+	        if (Role.LIBRARIAN.equals(role)) {
+	            btnAdd.setDisable(true);
+	            btnCopy.setDisable(true);
+	        }
+	        if (Role.ADMIN.equals(role)) {
+	        	 btnCheckout.setDisable(true);
+	           
+	        } else {
+
+	        }       
+	    }
 
 }

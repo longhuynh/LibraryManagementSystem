@@ -43,9 +43,7 @@ public class CheckoutController implements Initializable {
 	private TableColumn<Object, Object> clmLastName;
 	
 	@FXML
-	private TableView<CheckoutRecordTableEntry> tblCheckoutRecord;
-	@FXML
-	private TableColumn<Object, Object> clmCopyNumber;
+	private TableView<CheckoutRecordTableEntry> tblCheckoutRecord;	
 	@FXML
 	private TableColumn<Object, Object> clmTitle;
 	@FXML
@@ -76,7 +74,7 @@ public class CheckoutController implements Initializable {
 	private void onClickTableMember(MouseEvent event) {
 		mbtMember.setText(tblMember.getSelectionModel().getSelectedItem().getFullName());
 		memberId = tblMember.getSelectionModel().getSelectedItem().getMemberId();	
-
+		
 		try {
 			showCheckoutEntries();			
 		
@@ -90,14 +88,17 @@ public class CheckoutController implements Initializable {
 		BookBusiness bookBusiness = new BookBusiness();		
 		CheckoutRecord checkoutRecord = bookBusiness.getCheckoutRecordByMemberId(memberId);
 		for (CheckoutRecordEntry entry : checkoutRecord.getCheckoutRecordEntries()) {
+			System.out.println(entry.toString());
 			checkoutRecordEntries.add(new CheckoutRecordTableEntry(entry));
 		}
 
 		tblCheckoutRecord.getItems().clear();
 		tblCheckoutRecord.setItems(checkoutRecordEntries);
+		for (CheckoutRecordTableEntry checkoutRecordTableEntry : checkoutRecordEntries) {
+			System.out.println(checkoutRecordTableEntry.toString());
+		}
 		clmIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-		clmTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-		clmCopyNumber.setCellValueFactory(new PropertyValueFactory<>("copyNumber"));
+		clmTitle.setCellValueFactory(new PropertyValueFactory<>("title"));		
 		clmDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
 		clmCheckoutDate.setCellValueFactory(new PropertyValueFactory<>("checkoutDate"));
 	}

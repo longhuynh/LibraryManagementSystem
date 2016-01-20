@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import model.Role;
 
 
 /**
@@ -35,13 +36,8 @@ public class BookController implements Initializable {
         fXMLLoader.load(getClass().getResource("/view/book/ViewAll.fxml").openStream());       
         AllBookController bookcontroller = fXMLLoader.getController();       
         bookcontroller.viewDetails();
+        bookcontroller.setPermission(ApplicationController.getCurrentRole());
         spMainContent.getChildren().clear();
         spMainContent.getChildren().add(fXMLLoader.getRoot());
     }
-
-    @FXML
-    private void tbtnReportsOnAction(ActionEvent event) throws IOException {
-
-    }
-
 }

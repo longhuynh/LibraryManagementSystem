@@ -20,11 +20,11 @@ public class CheckoutRecordTableEntry {
 	}
 
 	public CheckoutRecordTableEntry(CheckoutRecordEntry entry) {
-		isbn.set(entry.getCopy().getBook().getIsbn());
-		title.set(entry.getCopy().getBook().getTitle());
-		copyNumber.set(String.valueOf(entry.getCopy().getBook().getCopyCount()).toString());
-		checkoutDate.set(entry.getCheckoutDate().toString());
-		dueDate.set(entry.getDueDate().toString());
+		this.isbn.set(entry.getCopy().getBook().getIsbn());
+		this.title.set(entry.getCopy().getBook().getTitle());
+		this.copyNumber.set(String.valueOf(entry.getCopy().getBook().getCopyCount()).toString());
+		this.checkoutDate.set(entry.getCheckoutDate().toString());
+		this.dueDate.set(entry.getDueDate().toString());
 	}
 
 	public String getISBN() {
@@ -35,7 +35,7 @@ public class CheckoutRecordTableEntry {
 		return this.title.get();
 	}
 
-	public String getCopyNum() {
+	public String getCopyNumber() {
 		return this.copyNumber.get();
 	}
 
@@ -70,4 +70,11 @@ public class CheckoutRecordTableEntry {
 	public StringProperty memberIdPropery() {
 		return this.memberId;
 	}
+	
+	@Override
+	public String toString() {
+		return "CheckoutRecordTableEntry [isbn=" + isbn + ", title=" + title + ", copyNumber=" + copyNumber
+				+ ", checkoutDate=" + checkoutDate + ", dueDate=" + dueDate + ", memberId=" + memberId + "]";
+	}
+
 }

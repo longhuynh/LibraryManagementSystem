@@ -34,7 +34,7 @@
 				<HBox alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="763.0" spacing="10.0" BorderPane.alignment="CENTER">
 					<children>
 						<Button fx:id="btnAdd" mnemonicParsing="false" onAction="#onClickButtonAdd" text="Add New" />
-						<Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#onClickButtonCopy" text="Copy" />
+						<Button fx:id="btnCopy" mnemonicParsing="false" onAction="#onClickButtonCopy" text="Copy" />
 						<Button fx:id="btnCheckout" mnemonicParsing="false" onAction="#onClickButtonCheckout" text="Checkout" />
 					</children>
 					<padding>

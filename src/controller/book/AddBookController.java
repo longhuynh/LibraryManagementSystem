@@ -47,18 +47,22 @@ public class AddBookController implements Initializable {
 			add(new Address("501 Mountain", "Mountain View", "CA", "94707"));
 		}
 	};
-	
+
 	@SuppressWarnings("serial")
 	public List<Author> allAuthors = new ArrayList<Author>() {
 		{
-			add(new Author("Tom", "Thomas", "641123456", addresses.get(0), "Don’t think for a second that I actually care what you have to say."));
+			add(new Author("Tom", "Thomas", "641123456", addresses.get(0),
+					"Don’t think for a second that I actually care what you have to say."));
 			add(new Author("Peter", "Thomas", "6413334444", addresses.get(0), "Every storm runs out of rain."));
-			add(new Author("Maryam", "Pugh", "6412221111", addresses.get(1), "Have lots of hair and like ugly things."));
-			add(new Author("Andrew", "Cleveland", "9764452232", addresses.get(2), "I have this new theory that human adolescence doesn’t end until your early thirties."));
-			add(new Author("Sarah", "Connor", "1234222663", addresses.get(3), "I always feel sad for seedless watermelons, because what if they wanted babies?"));
+			add(new Author("Maryam", "Pugh", "6412221111", addresses.get(1),
+					"Have lots of hair and like ugly things."));
+			add(new Author("Andrew", "Cleveland", "9764452232", addresses.get(2),
+					"I have this new theory that human adolescence doesn’t end until your early thirties."));
+			add(new Author("Sarah", "Connor", "1234222663", addresses.get(3),
+					"I always feel sad for seedless watermelons, because what if they wanted babies?"));
 		}
-	};	
-	
+	};
+
 	CustomTextField customTextField = new CustomTextField();
 	@FXML
 	private TextField txtIsbn;
@@ -96,7 +100,7 @@ public class AddBookController implements Initializable {
 	}
 
 	private void generateListView() {
-		
+
 		ObservableList<Author> authors = FXCollections.observableArrayList(allAuthors);
 
 		lvwAuthor.setItems(authors);
@@ -127,15 +131,15 @@ public class AddBookController implements Initializable {
 		String title = txtTitle.getText();
 		String maxCheckoutLength = txtMaxCheckoutLength.getText();
 
-		checkAllRule();
-		if("update".equals(btnUpdate.getText().toLowerCase())){
-			updateBook(isbn, title, maxCheckoutLength);
+		if (checkAllRule()) {
+			if ("update".equals(btnUpdate.getText().toLowerCase())) {
+				updateBook(isbn, title, maxCheckoutLength);
+			} else {
+				addNewBook(isbn, title, maxCheckoutLength);
+			}
 		}
-		else{	
-			addNewBook(isbn, title, maxCheckoutLength);
-		}			
 	}
-	
+
 	private void updateBook(String isbn, String title, String maxCheckoutLength) {
 		try {
 			BookBusiness bookBusiness = new BookBusiness();
@@ -146,7 +150,8 @@ public class AddBookController implements Initializable {
 					List<Author> selectedItems = lvwAuthor.getSelectionModel().getSelectedItems();
 					Author[] authors = selectedItems.toArray(new Author[] {});
 
-					bookBusiness.updateMemberInfo(isbn, title, Integer.parseInt(maxCheckoutLength), Arrays.asList(authors));
+					bookBusiness.updateMemberInfo(isbn, title, Integer.parseInt(maxCheckoutLength),
+							Arrays.asList(authors));
 					Stage stage = (Stage) btnClose.getScene().getWindow();
 					stage.close();
 					AllBookController controller = new AllBookController();
@@ -198,7 +203,7 @@ public class AddBookController implements Initializable {
 		stage.close();
 	}
 
-	private void checkAllRule() {
+	private boolean checkAllRule() {
 		try {
 			if (isAnyEmpty())
 				throw new LibrarySystemException("All fields must be nonempty");
@@ -206,7 +211,9 @@ public class AddBookController implements Initializable {
 				throw new LibrarySystemException("ISBN field must be exactly 7 digits");
 		} catch (LibrarySystemException e) {
 			Dialog.showWarningDialog("Error", null, e.getMessage());
+			return false;
 		}
+		return true;
 	}
 
 	private boolean isAnyEmpty() {
@@ -219,19 +226,19 @@ public class AddBookController implements Initializable {
 		btnSave.setText("Update");
 		txtIsbn.setText(book.getIsbn());
 		txtTitle.setText(book.getTitle());
-		txtMaxCheckoutLength.setText(""+book.getMaxCheckoutLength());		
+		txtMaxCheckoutLength.setText("" + book.getMaxCheckoutLength());
 		int[] indices = getIndices(book.getAuthors());
-		if(indices.length > 0){
+		if (indices.length > 0) {
 			lvwAuthor.getSelectionModel().selectIndices(indices[0], indices);
-		}	
+		}
 	}
 
 	private int[] getIndices(List<Author> list) {
 		int[] indices = new int[list.size()];
 		for (int i = 0, k = 0; i < allAuthors.size(); i++) {
-			if(list.contains(allAuthors.get(i))){
-				indices[k++] = i;				
-			}			
+			if (list.contains(allAuthors.get(i))) {
+				indices[k++] = i;
+			}
 		}
 		return indices;
 	}
