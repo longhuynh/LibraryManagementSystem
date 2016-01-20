@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import controller.member.ViewMemberController;
+import controller.member.AllMemberController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,14 +44,14 @@ public class MemberController implements Initializable {
 		lblView.setText("Members");
 		FXMLLoader fXMLLoader = new FXMLLoader();
 		fXMLLoader.load(getClass().getResource("/view/member/ViewAll.fxml").openStream());
-		ViewMemberController controller = fXMLLoader.getController();
+		AllMemberController controller = fXMLLoader.getController();
 		generateControls(controller);
 		AnchorPane acPane = fXMLLoader.getRoot();
 		spMemberContent.getChildren().clear();
 		spMemberContent.getChildren().add(acPane);
 	}
 
-	private void generateControls(ViewMemberController controller) {
+	private void generateControls(AllMemberController controller) {
 		controller.showDetails();
 		controller.btnClearFirstName.getStylesheets().add("/style/btnOnText.css");
 		controller.btnClearLastName.getStylesheets().add("/style/btnOnText.css");
@@ -67,9 +67,9 @@ public class MemberController implements Initializable {
 		lblView.setText("Add member");
 		FXMLLoader fXMLLoader = new FXMLLoader();
 		fXMLLoader.load(getClass().getResource("/view/member/ViewAll.fxml").openStream());
-		ViewMemberController controller = fXMLLoader.getController();
+		AllMemberController controller = fXMLLoader.getController();
 		generateControls(controller);
-		controller.createNewMeber();
+		controller.generateCreateNewMeber();
 		AnchorPane acPane = fXMLLoader.getRoot();
 		spMemberContent.getChildren().clear();
 		spMemberContent.getChildren().add(acPane);

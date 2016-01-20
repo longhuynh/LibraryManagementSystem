@@ -23,8 +23,8 @@ import util.RuleSetFactory;
 import business.MemberBusiness;
 import controller.Dialog;
 
-public class ViewMemberController implements Initializable {
-	private static final Logger logger = Logger.getLogger(ViewMemberController.class.getName());
+public class AllMemberController implements Initializable {
+	private static final Logger logger = Logger.getLogger(AllMemberController.class.getName());
 	public ObservableList<LibraryMember> members = FXCollections.observableArrayList();
 	CustomPasswordField customPasswordField = new CustomPasswordField();
 	CustomTextField customTextField = new CustomTextField();
@@ -151,7 +151,7 @@ public class ViewMemberController implements Initializable {
 			MemberBusiness memberBusiness = new MemberBusiness();
 			memberBusiness.addNewMember(memberId, firstName, lastName, telephone, address);			
 			showDetails();
-			LibraryMember member =memberBusiness.findBy(memberId); 
+			LibraryMember member = memberBusiness.findBy(memberId); 
 			tblMember.getSelectionModel().select(member);
 			return;
 		} catch (Exception ex) {
@@ -189,7 +189,7 @@ public class ViewMemberController implements Initializable {
 		clmLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 	}
 	
-	public void createNewMeber() {
+	public void generateCreateNewMeber() {
 		clearAll();
 		btnUpdate.setDisable(false);
 		btnUpdate.setText("Save");
@@ -209,42 +209,38 @@ public class ViewMemberController implements Initializable {
 	
 	private void checkAllRule() {
 		try {
-			applyRules();
+			String memberId = txtMemberId.getText();
+			String firstName = txtFirstName.getText();
+			String lastName = txtLastName.getText();
+			String telephone = txtPhoneNumber.getText();
+
+			String street = txtStreet.getText();
+			String city = txtCity.getText();
+			String state = txtState.getText();
+			String zip = txtZip.getText();
+
+			if (isAnyEmpty(firstName, lastName, telephone, street,city,state, zip ))
+				throw new LibrarySystemException("All fields must be nonempty");
+
+			if (!RuleSetFactory.isNumeric(memberId))
+				throw new LibrarySystemException("Id field must be numeric");
+			if (!RuleSetFactory.isAllLetters(firstName) || !RuleSetFactory.isAllLetters(lastName))
+				throw new LibrarySystemException("First Name field must be all letters");
+			if (!RuleSetFactory.isNumeric(zip))
+				throw new LibrarySystemException("Zip field must be numeric");
+			if (!RuleSetFactory.isExactLength(zip, 5))
+				throw new LibrarySystemException("Zip field must be exactly 5 digits");
+			if (!RuleSetFactory.isExactLength(state, 2))
+				throw new LibrarySystemException("State field must be exactly 2 digits");
+
+			if (!RuleSetFactory.isAllCapitals(state))
+				throw new LibrarySystemException("State field must be in the range A-Z");	
 		} catch (LibrarySystemException e) {
 			Dialog.showWarningDialog("Error", null, e.getMessage());			
 		}
 	}
 	
-	public void applyRules() throws LibrarySystemException {
-		String memberId = txtMemberId.getText();
-		String firstName = txtFirstName.getText();
-		String lastName = txtLastName.getText();
-		String telephone = txtPhoneNumber.getText();
-
-		String street = txtStreet.getText();
-		String city = txtCity.getText();
-		String state = txtState.getText();
-		String zip = txtZip.getText();
-
-		if (isAnyEmpty(firstName, lastName, telephone, street,city,state, zip ))
-			throw new LibrarySystemException("All fields must be nonempty");
-
-		if (!RuleSetFactory.isNumeric(memberId))
-			throw new LibrarySystemException("Id field must be numeric");
-		if (!RuleSetFactory.isAllLetters(firstName) || !RuleSetFactory.isAllLetters(lastName))
-			throw new LibrarySystemException("First Name field must be all letters");
-		if (!RuleSetFactory.isNumeric(zip))
-			throw new LibrarySystemException("Zip field must be numeric");
-		if (!RuleSetFactory.isExactLength(zip, 5))
-			throw new LibrarySystemException("Zip field must be exactly 5 digits");
-		if (!RuleSetFactory.isExactLength(state, 2))
-			throw new LibrarySystemException("State field must be exactly 2 digits");
-
-		if (!RuleSetFactory.isAllCapitals(state))
-			throw new LibrarySystemException("State field must be in the range A-Z");		
-	}
-
-	public boolean isAnyEmpty(String firstName, String lastName, String telephone, String street, String city, String state, String zip) {	
+	private boolean isAnyEmpty(String firstName, String lastName, String telephone, String street, String city, String state, String zip) {	
 		return firstName.isEmpty() || lastName.isEmpty() ||telephone.isEmpty()
 				|| state.isEmpty() || street.isEmpty() 
 				|| city.isEmpty() || zip.isEmpty();

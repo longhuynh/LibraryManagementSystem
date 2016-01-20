@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +39,7 @@ import model.User;
  * @author Long Huynh
  */
 public class ApplicationController implements Initializable {
-
+	public static Role currentRole = null;
     @FXML
     private StackPane stackPaneContent;
     @FXML
@@ -268,11 +269,15 @@ public class ApplicationController implements Initializable {
 
     public void viewDetails(User user) {
     	Image image = new Image("/image/" + user.getId() +".jpg");
-    	
+    	currentRole = user.getRole();
         circleImgUser.setFill(new ImagePattern(image));
         imgUserTop.setFill(new ImagePattern(image));
         lblFullName.setText(user.getUserName());
         lblUserName.setText(user.getUserName());
         lblRoleAs.setText("Role: " + user.getRole());
     }
+    
+    public static Role getCurrentRole() {
+		return currentRole;
+	}
 }

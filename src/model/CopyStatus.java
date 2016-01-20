@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 final public class CopyStatus implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7435685749743781241L;
 	private BookCopy copy;
 	private LibraryMember borrowingMember;
 	private boolean isOverdue = false;

@@ -63,8 +63,8 @@ public class BookBusiness {
 	 */
 	public boolean addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) 
 			throws LibrarySystemException {
-		Book test = searchBy(isbn);
-		if(test != null) throw new LibrarySystemException("Book with isbn " + isbn 
+		Book book = searchBy(isbn);
+		if(book != null) throw new LibrarySystemException("Book with isbn " + isbn 
 			+ " is already in the library collection!");
 		BookRepository repositoty = new BookRepository();
 		repositoty.save(new Book(isbn, title, maxCheckoutLength, authors));

@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 final public class BookCopy implements Serializable, Cloneable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6750443883511535912L;
 	private Book book;
 	private int copyNumuber;
 	private boolean isAvailable;

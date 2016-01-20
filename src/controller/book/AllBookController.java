@@ -6,12 +6,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import business.BookBusiness;
 import business.MemberBusiness;
+import controller.Dialog;
 import controller.LoginController;
 
-import controller.member.ViewMemberController;
+import controller.member.AllMemberController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -39,8 +39,8 @@ import model.Book;
  *
  * @author Long Huynh
  */
-public class ViewBookController implements Initializable {
-	private static final Logger logger = Logger.getLogger(ViewBookController.class.getName());
+public class AllBookController implements Initializable {
+	private static final Logger logger = Logger.getLogger(AllBookController.class.getName());
 	public ObservableList<Book> books = FXCollections.observableArrayList();
 	@FXML
 	private AnchorPane acMainContent;
@@ -51,7 +51,7 @@ public class ViewBookController implements Initializable {
 	@FXML
 	private Button btnUpdate;
 	@FXML
-	private Button btnDelete;
+	private Button btnCheckout;
 	@FXML
 	private TableView<Book> tblBook;
 	@FXML
@@ -88,7 +88,7 @@ public class ViewBookController implements Initializable {
 			scene.setFill(new Color(0, 0, 0, 0));
 			AddBookController controller = fXMLLoader.getController();
 			controller.lblAddBookContent.setText("Add Book");
-			
+
 			Stage stage = new Stage();
 			stage.setScene(scene);
 			stage.initModality(Modality.APPLICATION_MODAL);
@@ -106,7 +106,28 @@ public class ViewBookController implements Initializable {
 
 	@FXML
 	private void onClickButtonCheckout(ActionEvent event) {
-
+		Book book = tblBook.getSelectionModel().getSelectedItem();
+		if (book == null) {
+			Dialog.showInformationDialog("Information", null, "Plaese select a book want to checkout.");
+		} else {
+			FXMLLoader fXMLLoader = new FXMLLoader();
+			fXMLLoader.setLocation(getClass().getResource("/view/book/Checkout.fxml"));
+			try {
+				fXMLLoader.load();
+				Parent parent = fXMLLoader.getRoot();
+				Scene scene = new Scene(parent);
+				scene.setFill(new Color(0, 0, 0, 0));
+				CheckoutController controller = fXMLLoader.getController();
+				controller.viewDetails(book);
+				Stage stage = new Stage();
+				stage.setScene(scene);
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.initStyle(StageStyle.TRANSPARENT);
+				stage.show();
+			} catch (IOException ex) {
+				logger.log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 
 	public void viewDetails() {
@@ -115,47 +136,41 @@ public class ViewBookController implements Initializable {
 		tblBook.setItems(books);
 		clmIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
 		clmTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-		clmCheckoutLength.setCellValueFactory(new PropertyValueFactory<>("maxCheckoutLength"));		
+		clmCheckoutLength.setCellValueFactory(new PropertyValueFactory<>("maxCheckoutLength"));
 	}
 
 	@FXML
 	private void onClickTableBook(MouseEvent event) {
-		  if(event.getClickCount() == 2){
-	            selectedView();
-	        }else{
-	            System.out.println("CLICK");
-	        }
+		if (event.getClickCount() == 2) {
+			selectedView();
+		} else {
+			System.out.println("CLICK");
+		}
 	}
-	
-	 public void selectedView() {
-	        //ListCustomer listCustomer = tblCustomer.getSelectionModel().getSelectedItem();
-	        //String item = listCustomer.getId();
-//	        if (!item.isEmpty()) {
-//	           
-//	            FXMLLoader fXMLLoader = new FXMLLoader();
-//	            fXMLLoader.setLocation(getClass().getResource("/view/book/AddBook.fxml"));
-//	            try {
-//	                fXMLLoader.load();
-//	                Parent parent = fXMLLoader.getRoot();
-//	                Scene scene = new Scene(parent);
-//	                scene.setFill(new Color(0, 0, 0, 0));
-//	                AddBookController addCustomerController = fXMLLoader.getController();
-//	                
-//	             
-//	                //addCustomerController.lblCustomerContent.setText("Book Details");
-//	                addCustomerController.btnSave.setVisible(false);
-//	                addCustomerController.viewDetails();
-//	                Stage stage = new Stage();
-//	                stage.setScene(scene);
-//	                stage.initModality(Modality.APPLICATION_MODAL);
-//	                stage.initStyle(StageStyle.TRANSPARENT);
-//	                stage.show();
-//	            } catch (IOException ex) {
-//	                logger.log(Level.SEVERE, null, ex);
-//	            }
-//	        }
-	    }
 
+	public void selectedView() {
+		Book book = tblBook.getSelectionModel().getSelectedItem();
+
+		FXMLLoader fXMLLoader = new FXMLLoader();
+		fXMLLoader.setLocation(getClass().getResource("/view/book/AddNew.fxml"));
+		try {
+			fXMLLoader.load();
+			Parent parent = fXMLLoader.getRoot();
+			Scene scene = new Scene(parent);
+			scene.setFill(new Color(0, 0, 0, 0));
+			AddBookController controller = fXMLLoader.getController();
+			controller.lblAddBookContent.setText("Book Details");
+			// controller.btnSave.setText("Update");
+			controller.viewDetails(book);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initStyle(StageStyle.TRANSPARENT);
+			stage.show();
+		} catch (IOException ex) {
+			logger.log(Level.SEVERE, null, ex);
+		}
+	}
 
 	@FXML
 	private void onClickButtonRefresh(ActionEvent event) {

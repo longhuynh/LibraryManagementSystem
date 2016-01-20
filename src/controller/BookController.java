@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import controller.book.ViewBookController;
+import controller.book.AllBookController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +33,7 @@ public class BookController implements Initializable {
     public void loadBookGridView(ActionEvent event) throws IOException {      
         FXMLLoader fXMLLoader = new FXMLLoader();
         fXMLLoader.load(getClass().getResource("/view/book/ViewAll.fxml").openStream());       
-        ViewBookController bookcontroller = fXMLLoader.getController();       
+        AllBookController bookcontroller = fXMLLoader.getController();       
         bookcontroller.viewDetails();
         spMainContent.getChildren().clear();
         spMainContent.getChildren().add(fXMLLoader.getRoot());

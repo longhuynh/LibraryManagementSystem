@@ -4,9 +4,16 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import model.Book;
+import business.BookBusiness;
+import controller.Dialog;
+import controller.member.AllMemberController;
 import model.Address;
 import custom.CustomTextField;
 import javafx.collections.FXCollections;
@@ -17,14 +24,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Author;
+import util.LibrarySystemException;
 
 public class AddBookController implements Initializable {
+	private static final Logger logger = Logger.getLogger(AllMemberController.class.getName());
+
 	CustomTextField customTextField = new CustomTextField();
 	@FXML
 	private TextField txtIsbn;
@@ -34,8 +44,6 @@ public class AddBookController implements Initializable {
 	private ListView<Author> lvwAuthor;
 	@FXML
 	private TextField txtMaxCheckoutLength;
-	@FXML
-	private TextField txtNumberofCopy;
 
 	@FXML
 	public Button btnSave;
@@ -51,20 +59,15 @@ public class AddBookController implements Initializable {
 	public Button btnClearTitle;
 	@FXML
 	public Button btnClearMaxCheckoutLength;
-	@FXML
-	public Button btnClearNumberofCopy;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		customTextField.clearTextFieldByButton(txtIsbn, btnClearIsbn);
 		customTextField.clearTextFieldByButton(txtTitle, btnClearTitle);
 		customTextField.clearTextFieldByButton(txtMaxCheckoutLength, btnClearMaxCheckoutLength);
-		customTextField.clearTextFieldByButton(txtNumberofCopy, btnClearNumberofCopy);
 
 		customTextField.numaricTextfield(txtIsbn);
 		customTextField.numaricTextfield(txtMaxCheckoutLength);
-		customTextField.numaricTextfield(txtNumberofCopy);
-
 		generateListView();
 	}
 
@@ -123,37 +126,65 @@ public class AddBookController implements Initializable {
 
 	@FXML
 	private void btnSaveOnAction(ActionEvent event) {
-		String memberId = txtMemberId.getText();
-		String firstName = txtFirstName.getText();
-		String lastName = txtLastName.getText();
-		String telephone = txtPhoneNumber.getText();
+		String isbn = txtIsbn.getText();
+		String title = txtTitle.getText();
+		String maxCheckoutLength = txtMaxCheckoutLength.getText();
 
-		String street = txtStreet.getText();
-		String city = txtCity.getText();
-		String state = txtState.getText();
-		String zip = txtZip.getText();
-		Address address = new Address(street, city, state, zip);
 		checkAllRule();
-		if("update".equals(btnUpdate.getText().toLowerCase())){
-			updateMember(memberId, firstName, lastName, telephone, address);
+		try {
+			BookBusiness bookBusiness = new BookBusiness();
+			Book book = bookBusiness.searchBy(isbn);
+			if (book == null) {
+
+				try {
+					List<Author> selectedItems = lvwAuthor.getSelectionModel().getSelectedItems();
+					Author[] authors = selectedItems.toArray(new Author[] {});
+
+					bookBusiness.addBook(isbn, title, Integer.parseInt(maxCheckoutLength), Arrays.asList(authors));
+					Stage stage = (Stage) btnUpdate.getScene().getWindow();
+					stage.close();
+					AllBookController controller = new AllBookController();
+					controller.viewDetails();
+				} catch (LibrarySystemException ex) {
+					ex.printStackTrace();
+				}
+			} else {
+				Dialog.showErrorDialog("Error", null, "This book exist in system.");
+			}
+
+			return;
+		} catch (Exception ex) {
+			logger.log(Level.SEVERE, null, ex);
 		}
-		else{	
-			addNewMember(memberId, firstName, lastName, telephone, address);
-		}	
+
 	}
 
 	@FXML
-	private void btnCloseOnAction(ActionEvent event) {
+	private void onClickCloseButton(ActionEvent event) {
 		Stage stage = (Stage) btnClose.getScene().getWindow();
 		stage.close();
 	}
 
-	@FXML
-	private void btnUpdateOnAction(ActionEvent event) {
-
+	private void checkAllRule() {
+		try {
+			if (isAnyEmpty())
+				throw new LibrarySystemException("All fields must be nonempty");
+		} catch (LibrarySystemException e) {
+			Dialog.showWarningDialog("Error", null, e.getMessage());
+		}
 	}
 
-	public void viewDetails() {
+	private boolean isAnyEmpty() {
+		return txtIsbn.getText().isEmpty() || txtTitle.getText().isEmpty() || txtTitle.getText().isEmpty()
+				|| txtMaxCheckoutLength.getText().isEmpty()
+				|| lvwAuthor.getSelectionModel().getSelectedItems().isEmpty();
+	}
 
+	public void viewDetails(Book book) {
+		txtIsbn.setText(book.getIsbn());
+		txtTitle.setText(book.getTitle());
+		txtMaxCheckoutLength.setText(""+book.getMaxCheckoutLength());
+		//lvwAuthor.setSelectionModel((MultipleSelectionModel<Author>) book.getAuthors());
+		
 	}
 }

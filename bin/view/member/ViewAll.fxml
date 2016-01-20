@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="604.0" prefWidth="877.0"
 	stylesheets="/style/MainStyle.css" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.member.ViewMemberController">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.member.AllMemberController">
 	<children>
 		<BorderPane layoutX="294.0" layoutY="147.0" prefHeight="604.0"
 			prefWidth="877.0" AnchorPane.bottomAnchor="0.0"
