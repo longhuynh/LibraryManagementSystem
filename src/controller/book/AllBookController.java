@@ -101,7 +101,28 @@ public class AllBookController implements Initializable {
 
 	@FXML
 	private void onClickButtonCopy(ActionEvent event) {
-
+		Book book = tblBook.getSelectionModel().getSelectedItem();
+		if (book == null) {
+			Dialog.showInformationDialog("Information", null, "Plaese select a book want to copy.");
+		} else {
+			FXMLLoader fXMLLoader = new FXMLLoader();
+			fXMLLoader.setLocation(getClass().getResource("/view/book/Copy.fxml"));
+			try {
+				fXMLLoader.load();
+				Parent parent = fXMLLoader.getRoot();
+				Scene scene = new Scene(parent);
+				scene.setFill(new Color(0, 0, 0, 0));
+				CopyController controller = fXMLLoader.getController();
+				controller.viewDetails(book);
+				Stage stage = new Stage();
+				stage.setScene(scene);
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.initStyle(StageStyle.TRANSPARENT);
+				stage.show();
+			} catch (IOException ex) {
+				logger.log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 
 	@FXML

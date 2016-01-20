@@ -73,15 +73,27 @@ public class CheckoutController implements Initializable {
 	private void onClickButtonOK(ActionEvent event) {
 		LibraryMember member = tblMember.getSelectionModel().getSelectedItem();
 		BookBusiness bookBusiness = new BookBusiness();
+		checkAllRule();
 		try {
 			bookBusiness.checkoutBook(member.getMemberId(), txtIsbn.getText());
 			Stage stage = (Stage) btnOK.getScene().getWindow();
 			stage.close();
+			AllBookController controller = new AllBookController();
+			controller.viewDetails();
 		} catch (LibrarySystemException e) {
 			Dialog.showErrorDialog("Error", null, e.getMessage());
 		}
 	}
-
+	
+	private void checkAllRule() {
+		try {
+			if (tblMember.getSelectionModel().getSelectedItems().isEmpty())
+				throw new LibrarySystemException("All fields must be nonempty");
+		} catch (LibrarySystemException e) {
+			Dialog.showWarningDialog("Error", null, e.getMessage());
+		}
+	}
+	
 	@FXML
 	private void onClickButtonClose(ActionEvent event) {
 		Stage stage = (Stage) btnClose.getScene().getWindow();
