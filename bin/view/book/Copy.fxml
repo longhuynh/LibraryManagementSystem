@@ -60,17 +60,11 @@
 										<TextField fx:id="txtIsbn" disable="true"
 											GridPane.columnSpan="3" GridPane.rowIndex="1" />
 
-										<TextField fx:id="txtCopyNumber"
+										<TextField fx:id="txtTitle" disable="true"
 											GridPane.columnSpan="4" GridPane.rowIndex="3" />
-										<Button fx:id="btnClearCopyNumber" layoutX="167.0"
-											layoutY="43.0" mnemonicParsing="false" prefHeight="25.0"
-											prefWidth="35.0" stylesheets="/style/btnOnText.css"
-											GridPane.columnSpan="3" GridPane.halignment="RIGHT"
-											GridPane.rowIndex="3" />
-
 										<Button fx:id="btnOK" mnemonicParsing="false"
 											onAction="#onClickButtonOK" prefHeight="25.0" prefWidth="99.0"
-											text="OK" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+											text="Confirm" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 									</children>
 								</GridPane>
 								<Label layoutX="108.0" layoutY="5.0" prefHeight="39.0"

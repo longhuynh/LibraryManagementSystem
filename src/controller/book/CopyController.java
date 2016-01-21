@@ -21,10 +21,8 @@ import util.LibrarySystemException;
 
 public class CopyController implements Initializable {
 	private static final Logger logger = Logger.getLogger(AllMemberController.class.getName());
-
-	CustomTextField customTextField = new CustomTextField();
 	@FXML
-	private TextField txtCopyNumber;
+	private TextField txtTitle;
 	@FXML
 	private TextField txtIsbn;
 	@FXML
@@ -38,35 +36,19 @@ public class CopyController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		customTextField.clearTextFieldByButton(txtCopyNumber, btnClearCopyNumber);
-		customTextField.numaricTextfield(txtCopyNumber);
+	
 	}
 
 	@FXML
-	private void onClickButtonOK(ActionEvent event) {
-		checkAllRule();
-		BookBusiness bookBusiness = new BookBusiness();
+	private void onClickButtonOK(ActionEvent event) {		
 		try {
-			int copyNumber = Integer.parseInt(txtCopyNumber.getText());
-			for(int i = 0; i < copyNumber; i++){
-				bookBusiness.addBookCopy(txtIsbn.getText());
-			}
-			
+			BookBusiness bookBusiness = new BookBusiness();
+			bookBusiness.addBookCopy(txtIsbn.getText());			
 			Stage stage = (Stage) btnOK.getScene().getWindow();
 			stage.close();
-			AllBookController controller = new AllBookController();
-			controller.viewDetails();
+			Dialog.showInformationDialog("Copy book sucessful", null, "Please, click on refresh button to see new data");
 		} catch (LibrarySystemException e) {
 			Dialog.showErrorDialog("Error", null, e.getMessage());
-		}
-	}
-	
-	private void checkAllRule() {
-		try {
-			if (txtCopyNumber.getText().isEmpty())
-				throw new LibrarySystemException("All fields must be nonempty");
-		} catch (LibrarySystemException e) {
-			Dialog.showWarningDialog("Error", null, e.getMessage());
 		}
 	}
 	
@@ -78,5 +60,6 @@ public class CopyController implements Initializable {
 
 	public void viewDetails(Book book) {
 		txtIsbn.setText(book.getIsbn());
+		txtTitle.setText(book.getTitle());
 	}
 }

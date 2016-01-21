@@ -8,13 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.Book;
 import business.BookBusiness;
-import controller.ApplicationController;
-import controller.BookController;
 import controller.Dialog;
 import controller.member.AllMemberController;
 import model.Address;
@@ -23,16 +20,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Author;
@@ -137,13 +130,16 @@ public class AddBookController implements Initializable {
 		String maxCheckoutLength = txtMaxCheckoutLength.getText();
 		
 		if (checkAllRule()) {
+			String messageTitle = "Update successful";
 			if ("update".equals(btnSave.getText().toLowerCase())) {
 				updateBook(isbn, title, maxCheckoutLength);
 			} else {
-				addNewBook(isbn, title, maxCheckoutLength);
-			}
+				addNewBook(isbn, title, maxCheckoutLength);		
+				messageTitle = "Add new successful";
+			}	
 			Stage stage = (Stage) btnClose.getScene().getWindow();
-			stage.close();
+			stage.close();	
+			Dialog.showInformationDialog(messageTitle, null, "Please, click on refresh button to see new data");
 		}
 	}
 
