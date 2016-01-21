@@ -2,6 +2,7 @@ package controller.book;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Book;
+import model.BookTableEntry;
+import model.CheckoutRecordEntry;
+import model.CheckoutRecordTableEntry;
 import model.Role;
 
 /**
@@ -42,7 +46,7 @@ import model.Role;
  */
 public class AllBookController implements Initializable {
 	private static final Logger logger = Logger.getLogger(AllBookController.class.getName());
-	public ObservableList<Book> books = FXCollections.observableArrayList();
+	public ObservableList<BookTableEntry> bookTableEntries = FXCollections.observableArrayList();
 	@FXML
 	private AnchorPane acMainContent;
 	@FXML
@@ -54,13 +58,17 @@ public class AllBookController implements Initializable {
 	@FXML
 	private Button btnCheckout;
 	@FXML
-	private TableView<Book> tblBook;
+	private TableView<BookTableEntry> tblBook;
 	@FXML
 	private TableColumn<Object, Object> clmIsbn;
 	@FXML
 	private TableColumn<Object, Object> clmTitle;
 	@FXML
 	private TableColumn<Object, Object> clmCheckoutLength;
+	@FXML
+	private TableColumn<Object, Object> clmCopyNumber;
+	@FXML
+	private TableColumn<Object, Object> clmAuthor;
 
 	@FXML
 	private Button btnRefresh;
@@ -72,10 +80,16 @@ public class AllBookController implements Initializable {
 
 	@FXML
 	private void onKeyReleasedTextBoxSearch(Event event) {
+		bookTableEntries = FXCollections.observableArrayList();
 		String searchString = txtSearch.getText();
 		BookBusiness bookBusiness = new BookBusiness();
-		books = FXCollections.observableArrayList(bookBusiness.search(searchString));
-		tblBook.setItems(books);
+		List<Book> allBooks = bookBusiness.search(searchString);
+
+		for (Book entry : allBooks) {
+			bookTableEntries.add(new BookTableEntry(entry));
+		}
+		tblBook.getItems().clear();
+		tblBook.setItems(bookTableEntries);
 	}
 
 	@FXML
@@ -102,10 +116,12 @@ public class AllBookController implements Initializable {
 
 	@FXML
 	private void onClickButtonCopy(ActionEvent event) {
-		Book book = tblBook.getSelectionModel().getSelectedItem();
-		if (book == null) {
+		BookTableEntry entry = tblBook.getSelectionModel().getSelectedItem();
+		if (entry == null) {
 			Dialog.showInformationDialog("Information", null, "Plaese select a book want to copy.");
 		} else {
+			BookBusiness bookBusiness = new BookBusiness();
+			Book book = bookBusiness.searchBy(entry.getIsbn());
 			FXMLLoader fXMLLoader = new FXMLLoader();
 			fXMLLoader.setLocation(getClass().getResource("/view/book/Copy.fxml"));
 			try {
@@ -128,10 +144,12 @@ public class AllBookController implements Initializable {
 
 	@FXML
 	private void onClickButtonCheckout(ActionEvent event) {
-		Book book = tblBook.getSelectionModel().getSelectedItem();
-		if (book == null) {
+		BookTableEntry entry = tblBook.getSelectionModel().getSelectedItem();
+		if (entry == null) {
 			Dialog.showInformationDialog("Information", null, "Plaese select a book want to checkout.");
 		} else {
+			BookBusiness bookBusiness = new BookBusiness();
+			Book book = bookBusiness.searchBy(entry.getIsbn());
 			FXMLLoader fXMLLoader = new FXMLLoader();
 			fXMLLoader.setLocation(getClass().getResource("/view/book/Checkout.fxml"));
 			try {
@@ -153,12 +171,20 @@ public class AllBookController implements Initializable {
 	}
 
 	public void viewDetails() {
+		bookTableEntries = FXCollections.observableArrayList();
 		BookBusiness bookBusiness = new BookBusiness();
-		books = FXCollections.observableArrayList(bookBusiness.getAll());
-		tblBook.setItems(books);
+		List<Book> allBooks = bookBusiness.getAll();
+		for (Book entry : allBooks) {
+			bookTableEntries.add(new BookTableEntry(entry));
+		}
+		tblBook.getItems().clear();
+		tblBook.setItems(bookTableEntries);
+		tblBook.setItems(bookTableEntries);
 		clmIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
 		clmTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+		clmCopyNumber.setCellValueFactory(new PropertyValueFactory<>("copyNumber"));
 		clmCheckoutLength.setCellValueFactory(new PropertyValueFactory<>("maxCheckoutLength"));
+		clmAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
 	}
 
 	@FXML
@@ -171,11 +197,13 @@ public class AllBookController implements Initializable {
 	}
 
 	public void selectedView() {
-		Book book = tblBook.getSelectionModel().getSelectedItem();
+		BookTableEntry entry = tblBook.getSelectionModel().getSelectedItem();
 
 		FXMLLoader fXMLLoader = new FXMLLoader();
 		fXMLLoader.setLocation(getClass().getResource("/view/book/AddNew.fxml"));
 		try {
+			BookBusiness bookBusiness = new BookBusiness();
+			Book book = bookBusiness.searchBy(entry.getIsbn());
 			fXMLLoader.load();
 			Parent parent = fXMLLoader.getRoot();
 			Scene scene = new Scene(parent);
@@ -197,22 +225,20 @@ public class AllBookController implements Initializable {
 	@FXML
 	private void onClickButtonRefresh(ActionEvent event) {
 		txtSearch.setText("");
-		BookBusiness bookBusiness = new BookBusiness();
-		books = FXCollections.observableArrayList(bookBusiness.getAll());
-		tblBook.setItems(books);
+		viewDetails();
 	}
-	
-	 public void setPermission(Role role) {
-	        if (Role.LIBRARIAN.equals(role)) {
-	            btnAdd.setDisable(true);
-	            btnCopy.setDisable(true);
-	        }
-	        if (Role.ADMIN.equals(role)) {
-	        	 btnCheckout.setDisable(true);
-	           
-	        } else {
 
-	        }       
-	    }
+	public void setPermission(Role role) {
+		if (Role.LIBRARIAN.equals(role)) {
+			btnAdd.setDisable(true);
+			btnCopy.setDisable(true);
+		}
+		if (Role.ADMIN.equals(role)) {
+			btnCheckout.setDisable(true);
+
+		} else {
+
+		}
+	}
 
 }
