@@ -93,6 +93,34 @@ public class BookBusiness {
 		return member.getRecord();
 	}
 	
+	public int getTotalBookCheckouted(){
+		int total = 0;
+		List<Book> books = getAll();
+		for (Book book : books) {
+			for (BookCopy bookCopy : book.getBookCopies()) {
+				CopyStatus copyStatus = computeStatus(bookCopy);
+				if(copyStatus.getBorrowingMember() != null){
+					total++;
+				}
+			}
+		}
+		return total;
+	}
+	
+	public int getTotalBookOverDue(){
+		int total = 0;
+		List<Book> books = getAll();
+		for (Book book : books) {
+			for (BookCopy bookCopy : book.getBookCopies()) {
+				CopyStatus copyStatus = computeStatus(bookCopy);
+				if(copyStatus.isOverdue()){
+					total++;
+				}
+			}
+		}
+		return total;
+	}
+	
 	public CopyStatus computeStatus(BookCopy copy) {
 		MemberRepository repository = new MemberRepository();
 		Book item = copy.getBook();

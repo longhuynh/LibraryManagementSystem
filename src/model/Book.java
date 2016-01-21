@@ -95,6 +95,10 @@ final public class Book implements Serializable, Cloneable {
 	public String getIsbn() {
 		return isbn;
 	}
+	
+	public BookCopy[] getBookCopies() {
+		return copies;
+	}
 
 
 	public BookCopy getNextAvailableCopy() {
