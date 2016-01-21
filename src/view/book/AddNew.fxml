@@ -86,7 +86,7 @@
 							prefWidth="35.0" stylesheets="/style/btnOnText.css"
 							GridPane.columnSpan="4" GridPane.halignment="RIGHT"
 							GridPane.rowIndex="11" />
-						<Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveOnAction"
+						<Button fx:id="btnSave" mnemonicParsing="false" onAction="#onClickButtonSave"
 							text="Save" GridPane.columnSpan="4" GridPane.halignment="CENTER"
 							GridPane.rowIndex="14" />
 					</children>

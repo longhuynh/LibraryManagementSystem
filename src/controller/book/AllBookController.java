@@ -8,14 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import business.BookBusiness;
-import business.MemberBusiness;
 import controller.Dialog;
-import controller.LoginController;
-
-import controller.member.AllMemberController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -36,8 +31,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Book;
 import model.BookTableEntry;
-import model.CheckoutRecordEntry;
-import model.CheckoutRecordTableEntry;
 import model.Role;
 
 /**
@@ -75,7 +68,7 @@ public class AllBookController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		
 	}
 
 	@FXML
@@ -179,12 +172,11 @@ public class AllBookController implements Initializable {
 		}
 		tblBook.getItems().clear();
 		tblBook.setItems(bookTableEntries);
-		tblBook.setItems(bookTableEntries);
 		clmIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
 		clmTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 		clmCopyNumber.setCellValueFactory(new PropertyValueFactory<>("copyNumber"));
 		clmCheckoutLength.setCellValueFactory(new PropertyValueFactory<>("maxCheckoutLength"));
-		clmAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
+		clmAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));		
 	}
 
 	@FXML
@@ -209,8 +201,7 @@ public class AllBookController implements Initializable {
 			Scene scene = new Scene(parent);
 			scene.setFill(new Color(0, 0, 0, 0));
 			AddBookController controller = fXMLLoader.getController();
-			controller.lblAddBookContent.setText("Book Details");
-			// controller.btnSave.setText("Update");
+			controller.lblAddBookContent.setText("Book Details");			
 			controller.viewDetails(book);
 			Stage stage = new Stage();
 			stage.setScene(scene);
@@ -223,7 +214,7 @@ public class AllBookController implements Initializable {
 	}
 
 	@FXML
-	private void onClickButtonRefresh(ActionEvent event) {
+	public void onClickButtonRefresh(ActionEvent event) {
 		txtSearch.setText("");
 		viewDetails();
 	}
@@ -240,5 +231,4 @@ public class AllBookController implements Initializable {
 
 		}
 	}
-
 }

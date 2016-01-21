@@ -2,6 +2,7 @@ package controller.book;
 
 import javafx.fxml.Initializable;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,8 @@ import java.util.logging.Logger;
 
 import model.Book;
 import business.BookBusiness;
+import controller.ApplicationController;
+import controller.BookController;
 import controller.Dialog;
 import controller.member.AllMemberController;
 import model.Address;
@@ -20,6 +23,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -27,6 +32,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Author;
@@ -77,8 +83,7 @@ public class AddBookController implements Initializable {
 	public Button btnSave;
 	@FXML
 	private Button btnClose;
-	@FXML
-	public Button btnUpdate;
+	
 	@FXML
 	public Label lblAddBookContent;
 	@FXML
@@ -126,36 +131,36 @@ public class AddBookController implements Initializable {
 	}
 
 	@FXML
-	private void btnSaveOnAction(ActionEvent event) {
+	private void onClickButtonSave(ActionEvent event) throws IOException {
 		String isbn = txtIsbn.getText();
 		String title = txtTitle.getText();
 		String maxCheckoutLength = txtMaxCheckoutLength.getText();
-
+		
 		if (checkAllRule()) {
-			if ("update".equals(btnUpdate.getText().toLowerCase())) {
+			if ("update".equals(btnSave.getText().toLowerCase())) {
 				updateBook(isbn, title, maxCheckoutLength);
 			} else {
 				addNewBook(isbn, title, maxCheckoutLength);
 			}
+			Stage stage = (Stage) btnClose.getScene().getWindow();
+			stage.close();
 		}
 	}
 
 	private void updateBook(String isbn, String title, String maxCheckoutLength) {
-		try {
+	
 			BookBusiness bookBusiness = new BookBusiness();
+			System.out.println(isbn );
 			Book book = bookBusiness.searchBy(isbn);
 			if (book != null) {
-
 				try {
 					List<Author> selectedItems = lvwAuthor.getSelectionModel().getSelectedItems();
 					Author[] authors = selectedItems.toArray(new Author[] {});
-
-					bookBusiness.updateMemberInfo(isbn, title, Integer.parseInt(maxCheckoutLength),
-							Arrays.asList(authors));
-					Stage stage = (Stage) btnClose.getScene().getWindow();
-					stage.close();
-					AllBookController controller = new AllBookController();
-					controller.viewDetails();
+					
+					bookBusiness.updateBookInfo(isbn, title, Integer.parseInt(maxCheckoutLength),
+							Arrays.asList(authors));					
+					
+				
 				} catch (LibrarySystemException ex) {
 					ex.printStackTrace();
 				}
@@ -164,13 +169,11 @@ public class AddBookController implements Initializable {
 			}
 
 			return;
-		} catch (Exception ex) {
-			logger.log(Level.SEVERE, null, ex);
-		}
+	
 	}
 
 	private void addNewBook(String isbn, String title, String maxCheckoutLength) {
-		try {
+	
 			BookBusiness bookBusiness = new BookBusiness();
 			Book book = bookBusiness.searchBy(isbn);
 			if (book == null) {
@@ -180,10 +183,7 @@ public class AddBookController implements Initializable {
 					Author[] authors = selectedItems.toArray(new Author[] {});
 
 					bookBusiness.addBook(isbn, title, Integer.parseInt(maxCheckoutLength), Arrays.asList(authors));
-					Stage stage = (Stage) btnClose.getScene().getWindow();
-					stage.close();
-					AllBookController controller = new AllBookController();
-					controller.viewDetails();
+	
 				} catch (LibrarySystemException ex) {
 					ex.printStackTrace();
 				}
@@ -192,9 +192,7 @@ public class AddBookController implements Initializable {
 			}
 
 			return;
-		} catch (Exception ex) {
-			logger.log(Level.SEVERE, null, ex);
-		}
+	
 	}
 
 	@FXML
@@ -226,6 +224,7 @@ public class AddBookController implements Initializable {
 		btnSave.setText("Update");
 		txtIsbn.setText(book.getIsbn());
 		txtTitle.setText(book.getTitle());
+		txtIsbn.setDisable(true);
 		txtMaxCheckoutLength.setText("" + book.getMaxCheckoutLength());
 		int[] indices = getIndices(book.getAuthors());
 		if (indices.length > 0) {

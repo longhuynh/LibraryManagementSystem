@@ -66,7 +66,7 @@ public class BookBusiness {
 		return true;
 	}
 	
-	public boolean updateMemberInfo(String isbn, String title, int maxCheckoutLength, List<Author> authors) 
+	public boolean updateBookInfo(String isbn, String title, int maxCheckoutLength, List<Author> authors) 
 			throws LibrarySystemException {
 		Book book = searchBy(isbn);
 		if(book == null) throw new LibrarySystemException("Book with isbn " + isbn 

@@ -213,7 +213,7 @@ public class ApplicationController implements Initializable {
             fXMLLoader.load(getClass().getResource("/view/Book.fxml").openStream());           
             BookController bookcontroller = fXMLLoader.getController();           
             bookcontroller.acMainSells.getStylesheets().add("/style/MainStyle.css");
-            bookcontroller.loadBookGridView(event);
+            bookcontroller.loadBookGridView();
             AnchorPane anchorPane = fXMLLoader.getRoot();
             stackPaneContent.getChildren().clear();
             stackPaneContent.getChildren().add(anchorPane);

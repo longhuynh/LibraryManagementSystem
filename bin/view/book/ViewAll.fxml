@@ -7,18 +7,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="acMainContent" prefHeight="509.0" prefWidth="763.0" stylesheets="/style/MainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.book.AllBookController">
+<AnchorPane id="AnchorPane" fx:id="acMainContent" prefHeight="509.0"
+	prefWidth="763.0" stylesheets="/style/MainStyle.css" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.book.AllBookController">
 	<children>
-		<BorderPane layoutX="253.0" layoutY="132.0" prefHeight="509.0" prefWidth="763.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<BorderPane layoutX="253.0" layoutY="132.0" prefHeight="509.0"
+			prefWidth="763.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
 			<center>
-				<TableView fx:id="tblBook" onMouseClicked="#onClickTableBook" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: none;" BorderPane.alignment="CENTER">
+				<TableView fx:id="tblBook" onMouseClicked="#onClickTableBook"
+					prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: none;"
+					BorderPane.alignment="CENTER">
 					<columns>
-						<TableColumn fx:id="clmIsbn" minWidth="100.0" prefWidth="100.0" text="ISBN" />
-						<TableColumn fx:id="clmTitle" minWidth="300.0" prefWidth="300.0" text="Title" />
-						<TableColumn fx:id="clmCopyNumber" minWidth="120.0" prefWidth="120.0" text="Number of Copy" />
-						<TableColumn fx:id="clmAuthor" minWidth="300.0" prefWidth="250.0" text="Author" />
-						<TableColumn fx:id="clmCheckoutLength" minWidth="150.0" prefWidth="150.0" text="Checkout Length " />
-					
+						<TableColumn fx:id="clmIsbn" minWidth="100.0"
+							prefWidth="100.0" text="ISBN" />
+						<TableColumn fx:id="clmTitle" minWidth="300.0"
+							prefWidth="300.0" text="Title" />
+						<TableColumn fx:id="clmCopyNumber" minWidth="120.0"
+							prefWidth="120.0" text="Number of Copy" />
+						<TableColumn fx:id="clmAuthor" minWidth="300.0"
+							prefWidth="250.0" text="Author" />
+						<TableColumn fx:id="clmCheckoutLength" minWidth="150.0"
+							prefWidth="150.0" text="Max. Checkout Length " />
+
 					</columns>
 					<columnResizePolicy>
 						<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -26,19 +38,26 @@
 				</TableView>
 			</center>
 			<top>
-				<HBox alignment="CENTER" prefHeight="65.0" prefWidth="763.0" spacing="10.0" BorderPane.alignment="CENTER">
+				<HBox alignment="CENTER" prefHeight="65.0" prefWidth="763.0"
+					spacing="10.0" BorderPane.alignment="CENTER">
 					<children>
-						<TextField fx:id="txtSearch" onKeyReleased="#onKeyReleasedTextBoxSearch" prefHeight="25.0" prefWidth="603.0" promptText="Search book by Title" />
-						<Button fx:id="btnRefresh" mnemonicParsing="false" onAction="#onClickButtonRefresh" prefHeight="32.0" prefWidth="32.0" />
+						<TextField fx:id="txtSearch" onKeyReleased="#onKeyReleasedTextBoxSearch"
+							prefHeight="25.0" prefWidth="603.0" promptText="Search book by Title" />
+						<Button fx:id="btnRefresh" mnemonicParsing="false"
+							onAction="#onClickButtonRefresh" prefHeight="32.0" prefWidth="32.0" />
 					</children>
 				</HBox>
 			</top>
 			<bottom>
-				<HBox alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="763.0" spacing="10.0" BorderPane.alignment="CENTER">
+				<HBox alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="763.0"
+					spacing="10.0" BorderPane.alignment="CENTER">
 					<children>
-						<Button fx:id="btnAdd" mnemonicParsing="false" onAction="#onClickButtonAdd" text="Add New" />
-						<Button fx:id="btnCopy" mnemonicParsing="false" onAction="#onClickButtonCopy" text="Copy" />
-						<Button fx:id="btnCheckout" mnemonicParsing="false" onAction="#onClickButtonCheckout" text="Checkout" />
+						<Button fx:id="btnAdd" mnemonicParsing="false" onAction="#onClickButtonAdd"
+							text="Add New" />
+						<Button fx:id="btnCopy" mnemonicParsing="false"
+							onAction="#onClickButtonCopy" text="Copy" />
+						<Button fx:id="btnCheckout" mnemonicParsing="false"
+							onAction="#onClickButtonCheckout" text="Checkout" />
 					</children>
 					<padding>
 						<Insets right="10.0" />
