@@ -16,9 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 /**
@@ -27,71 +25,64 @@ import javafx.util.Duration;
  * @author Long Huynh
  */
 public class HomeController implements Initializable {
-
 	@FXML
 	private Label lblTotalBook;
-
 	@FXML
 	private Label lblTotalMember;
-
 	@FXML
 	private Label lblTotalStaff;
-
-
 	@FXML
 	private Label lblTotalOverdueBook;
-
 	@FXML
 	private PieChart graphPieChart;
+	@FXML
+	private Label lblCheckoutBook;
+	@FXML
+	private Label lblAvailableBook;
 
-
-	private Tooltip tooltip;
-
-	/**
-	 * Initializes the controller class.
-	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		BookBusiness bookBusiness = new BookBusiness();
 		MemberBusiness memberBusiness = new MemberBusiness();
 		UserBusineess userBusineess = new UserBusineess();
+		int totalBook = bookBusiness.getTotalBooks().size();
 
-		lblTotalBook.setText(bookBusiness.getAll().size() + "");
+		int totalCheckouted = bookBusiness.getTotalBookCheckouted();
+		int totalAvailable =  totalBook - totalCheckouted;
+		
+		lblCheckoutBook.setText(totalCheckouted + "");
+		lblAvailableBook.setText(totalAvailable + "");
+		
+		lblTotalBook.setText(totalBook + "");
+		lblTotalOverdueBook.setText(bookBusiness.getTotalBookOverDue() + "");
 		lblTotalMember.setText(memberBusiness.getAll().size() + "");
 		lblTotalStaff.setText(userBusineess.getAll().size() + "");
-		lblTotalOverdueBook.setText(userBusineess.getAll().size() + "");
-
-
-
-//		caption.setTextFill(Color.AZURE);
-//		caption.setStyle("-fx-font: 24 arial;");
-
+		
+		
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-				new PieChart.Data("CheckOut", 12),//totalBookCopyCount - totalAvailableBookCount),
-				new PieChart.Data("Available", 17));//totalAvailableBookCount));
+				new PieChart.Data("Checkouted", totalCheckouted),
+				new PieChart.Data("Available",totalAvailable));
 		graphPieChart.setData(pieChartData);
 		graphPieChart.setStyle("-fx-pie-label-visible: false");
 		graphPieChart.setTitle("Library Books");
-
 		for (final PieChart.Data data : pieChartData) {
-			tooltip.install(data.getNode(),tooltip);
-			data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-//					System.out.println("print");
-					tooltip.setText(String.valueOf(data.getName() + "\n" + data.getPieValue()) );
-				}
-			});
-//			caption.setVisible(true);
+	
+			// data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, new
+			// EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// Tooltip.install(data.getNode(), tooltip);
+			// tooltip.setText(String.valueOf(data.getName() + "\n" +
+			// data.getPieValue()));
+			// }
+			// });
+
 			data.getNode().setOnMouseEntered(new MouseHoverAnimation(data, graphPieChart));
 			data.getNode().setOnMouseExited(new MouseExitAnimation());
 		}
-
 		graphPieChart.setClockwise(false);
 
 	}
-
-
 }
 
 class MouseHoverAnimation implements EventHandler<MouseEvent> {
@@ -102,12 +93,10 @@ class MouseHoverAnimation implements EventHandler<MouseEvent> {
 	private double sin;
 	private PieChart chart;
 
-
 	public MouseHoverAnimation(PieChart.Data d, PieChart chart) {
 		this.chart = chart;
 		double start = 0;
 		double angle = calcAngle(d);
-
 
 		for (PieChart.Data tmp : chart.getData()) {
 

@@ -3,6 +3,7 @@ package controller.book;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -32,6 +36,7 @@ import javafx.stage.StageStyle;
 import model.Book;
 import model.BookTableEntry;
 import model.Role;
+import util.LibrarySystemException;
 
 /**
  *
@@ -115,23 +120,42 @@ public class AllBookController implements Initializable {
 		} else {
 			BookBusiness bookBusiness = new BookBusiness();
 			Book book = bookBusiness.searchBy(entry.getIsbn());
-			FXMLLoader fXMLLoader = new FXMLLoader();
-			fXMLLoader.setLocation(getClass().getResource("/view/book/Copy.fxml"));
-			try {
-				fXMLLoader.load();
-				Parent parent = fXMLLoader.getRoot();
-				Scene scene = new Scene(parent);
-				scene.setFill(new Color(0, 0, 0, 0));
-				CopyController controller = fXMLLoader.getController();
-				controller.viewDetails(book);
-				Stage stage = new Stage();
-				stage.setScene(scene);
-				stage.initModality(Modality.APPLICATION_MODAL);
-				stage.initStyle(StageStyle.TRANSPARENT);
-				stage.show();
-			} catch (IOException ex) {
-				logger.log(Level.SEVERE, null, ex);
+			
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Copy Book");
+			alert.setHeaderText(null);
+			alert.setContentText("Do you want to copy book [" + book.getIsbn() + " - " + book.getTitle() + "]?");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+				try {
+					bookBusiness.addBookCopy(book.getIsbn());
+					Dialog.showInformationDialog("Copy book", null, "Copy book sucessful.");
+					viewDetails();
+				} catch (LibrarySystemException ex) {
+					logger.log(Level.SEVERE, null, ex);
+				}	
+			} else {
+			   
 			}
+			
+//			FXMLLoader fXMLLoader = new FXMLLoader();
+//			fXMLLoader.setLocation(getClass().getResource("/view/book/Copy.fxml"));
+//			try {
+//				fXMLLoader.load();
+//				Parent parent = fXMLLoader.getRoot();
+//				Scene scene = new Scene(parent);
+//				scene.setFill(new Color(0, 0, 0, 0));
+//				CopyController controller = fXMLLoader.getController();
+//				controller.viewDetails(book);
+//				Stage stage = new Stage();
+//				stage.setScene(scene);
+//				stage.initModality(Modality.APPLICATION_MODAL);
+//				stage.initStyle(StageStyle.TRANSPARENT);
+//				stage.show();
+//			} catch (IOException ex) {
+//				logger.log(Level.SEVERE, null, ex);
+//			}
 		}
 	}
 

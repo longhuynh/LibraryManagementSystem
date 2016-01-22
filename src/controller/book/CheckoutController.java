@@ -84,17 +84,17 @@ public class CheckoutController implements Initializable {
 	}
 
 	private void showCheckoutEntries() throws LibrarySystemException {
-		ObservableList<CheckoutRecordTableEntry> checkoutRecordEntries = FXCollections.observableArrayList();
+		ObservableList<CheckoutRecordTableEntry> checkoutRecords = FXCollections.observableArrayList();
 		BookBusiness bookBusiness = new BookBusiness();		
 		CheckoutRecord checkoutRecord = bookBusiness.getCheckoutRecordByMemberId(memberId);
 		for (CheckoutRecordEntry entry : checkoutRecord.getCheckoutRecordEntries()) {
 			System.out.println(entry.toString());
-			checkoutRecordEntries.add(new CheckoutRecordTableEntry(entry));
+			checkoutRecords.add(new CheckoutRecordTableEntry(entry));
 		}
 
 		tblCheckoutRecord.getItems().clear();
-		tblCheckoutRecord.setItems(checkoutRecordEntries);
-		for (CheckoutRecordTableEntry checkoutRecordTableEntry : checkoutRecordEntries) {
+		tblCheckoutRecord.setItems(checkoutRecords);
+		for (CheckoutRecordTableEntry checkoutRecordTableEntry : checkoutRecords) {
 			System.out.println(checkoutRecordTableEntry.toString());
 		}
 		clmIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));

@@ -46,11 +46,6 @@ final public class CheckoutRecordEntry implements Serializable, Cloneable {
 		return false;
 	}
 
-	/**
-	 * Allows member to return the copy of the publication that was checked out
-	 * Updates the hasBeenReturned flag in this class, and returns a new
-	 * CheckoutRecordEntry with this updated value
-	 */
 	public CheckoutRecordEntry returnCopy() {
 		if (hasBeenReturned) {
 			return this;

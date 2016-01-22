@@ -13,16 +13,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" stylesheets="/style/Home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="725.0" stylesheets="/style/Home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
 	<children>
-	<BorderPane layoutX="262.0" layoutY="138.0" prefHeight="540.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<BorderPane layoutX="199.0" layoutY="139.0" prefHeight="450.0" prefWidth="683.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<top>
-				<AnchorPane prefHeight="111.0" prefWidth="683.0" style="-fx-border-color: #ff4e3c; -fx-border-style: solid; -fx-border-width: 0px 0px 5px;" BorderPane.alignment="CENTER">
+				<AnchorPane prefHeight="60.0" prefWidth="683.0" style="-fx-border-color: #ff4e3c; -fx-border-style: solid; -fx-border-width: 0px 0px 5px;" BorderPane.alignment="CENTER">
 					<children>
-						<HBox alignment="CENTER" layoutX="194.0" layoutY="28.0" prefHeight="133.0" prefWidth="831.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-							<children>
-								<AnchorPane prefHeight="106.0" prefWidth="469.0" />
-							</children>
+						<HBox alignment="CENTER" layoutX="194.0" layoutY="28.0" prefHeight="70.0" prefWidth="683.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
 						</HBox>
 					</children>
 				</AnchorPane>
@@ -32,68 +30,70 @@
 					<padding>
 						<Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
 					</padding>
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fabb3d" height="95.0" layoutX="546.0" layoutY="262.0" stroke="TRANSPARENT" strokeType="INSIDE" width="251.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#67c2ef" height="91.0" layoutX="543.0" layoutY="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5454" height="90.0" layoutX="544.0" layoutY="42.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#79c447" height="95.0" layoutX="545.0" layoutY="378.0" stroke="TRANSPARENT" strokeType="INSIDE" width="251.0" />
-                  <PieChart fx:id="graphPieChart" layoutX="42.0" layoutY="38.0" prefHeight="334.0" prefWidth="418.0" />
-                  <Text fill="#f2f2f2" layoutX="634.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#f2f2f2" layoutX="615.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#f2f2f2" layoutX="637.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Staffs">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#019cd0" layoutX="33.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Manager">
-                     <font>
-                        <Font name="System Bold" size="40.0" />
-                     </font>
-                  </Text>
-                  <Label layoutX="33.0" layoutY="447.0" text="1000 N 4th St, Fairfield, IA 52557" textFill="#000000cd">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="33.0" layoutY="467.0" text="+1-641-451-3077" textFill="#000000cd">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblTotalBook" layoutX="648.0" layoutY="185.0" text="12" textFill="#f8f8f8">
-                     <font>
-                        <Font name="System Bold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblTotalMember" layoutX="645.0" layoutY="299.0" text="12" textFill="#f8f8f8">
-                     <font>
-                        <Font name="System Bold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblTotalStaff" layoutX="646.0" layoutY="418.0" text="12" textFill="#f8f8f8">
-                     <font>
-                        <Font name="System Bold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblTotalOverdueBook" layoutX="648.0" layoutY="72.0" text="12" textFill="#f8f8f8">
-                     <font>
-                        <Font name="System Bold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Text fill="#f2f2f2" layoutX="591.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Overdue Book">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Text>
-               </children>
+					<children>
+						<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fabb3d" height="95.0" layoutX="546.0" layoutY="262.0" stroke="TRANSPARENT" strokeType="INSIDE" width="251.0" />
+						<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#67c2ef" height="91.0" layoutX="543.0" layoutY="38.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
+						<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5454" height="90.0" layoutX="543.0" layoutY="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
+						<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#79c447" height="95.0" layoutX="545.0" layoutY="378.0" stroke="TRANSPARENT" strokeType="INSIDE" width="251.0" />
+						<PieChart fx:id="graphPieChart" layoutX="33.0" layoutY="35.0" prefHeight="321.0" prefWidth="407.0" />
+						<Text fill="#f2f2f2" layoutX="626.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books">
+							<font>
+								<Font name="System Bold" size="24.0" />
+							</font>
+						</Text>
+						<Text fill="#f2f2f2" layoutX="615.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members">
+							<font>
+								<Font name="System Bold" size="24.0" />
+							</font>
+						</Text>
+						<Text fill="#f2f2f2" layoutX="637.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Staffs">
+							<font>
+								<Font name="System Bold" size="24.0" />
+							</font>
+						</Text>
+						<Text fill="#019cd0" layoutX="33.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Manager">
+							<font>
+								<Font name="System Bold" size="40.0" />
+							</font>
+						</Text>
+						<Label layoutX="33.0" layoutY="447.0" text="1000 N 4th St, Fairfield, IA 52557" textFill="#000000cd">
+							<font>
+								<Font name="System Bold" size="14.0" />
+							</font>
+						</Label>
+						<Label layoutX="33.0" layoutY="467.0" text="+1-641-451-3077" textFill="#000000cd">
+							<font>
+								<Font name="System Bold" size="14.0" />
+							</font>
+						</Label>
+						<Label fx:id="lblTotalBook" layoutX="648.0" layoutY="73.0" text="0" textFill="#f8f8f8">
+							<font>
+								<Font name="System Bold" size="40.0" />
+							</font>
+						</Label>
+						<Label fx:id="lblTotalMember" layoutX="645.0" layoutY="299.0" text="0" textFill="#f8f8f8">
+							<font>
+								<Font name="System Bold" size="40.0" />
+							</font>
+						</Label>
+						<Label fx:id="lblTotalStaff" layoutX="646.0" layoutY="418.0" text="0" textFill="#f8f8f8">
+							<font>
+								<Font name="System Bold" size="40.0" />
+							</font>
+						</Label>
+						<Label fx:id="lblTotalOverdueBook" layoutX="647.0" layoutY="180.0" text="0" textFill="#f8f8f8">
+							<font>
+								<Font name="System Bold" size="40.0" />
+							</font>
+						</Label>
+						<Text fill="#f2f2f2" layoutX="590.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Overdue Books">
+							<font>
+								<Font name="System Bold" size="24.0" />
+							</font>
+						</Text>
+                  <Label fx:id="lblCheckoutBook" layoutX="185.0" layoutY="361.0" text="0" />
+                  <Label fx:id="lblAvailableBook" layoutX="272.0" layoutY="361.0" text="0" />
+					</children>
 				</AnchorPane>
 			</center>
 			<padding>
@@ -102,13 +102,13 @@
 			<bottom>
 				<AnchorPane prefHeight="85.0" prefWidth="683.0" style="-fx-border-color: ff4e3c; -fx-border-width: 5px 0px 0px 0px; -fx-bo: ;" BorderPane.alignment="CENTER" />
 			</bottom>
-         <left>
-            <AnchorPane prefHeight="507.0" prefWidth="255.0" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <AnchorPane prefHeight="507.0" prefWidth="140.0" BorderPane.alignment="CENTER" />
-         </right>
+			<left>
+				<AnchorPane prefHeight="507.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+			</left>
+			<right>
+				<AnchorPane prefHeight="507.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+			</right>
 
-</BorderPane>
+		</BorderPane>
 	</children>
 </AnchorPane>

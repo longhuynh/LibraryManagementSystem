@@ -21,65 +21,72 @@ public class TestData {
 	@SuppressWarnings("serial")
 	List<Address> addresses = new ArrayList<Address>() {
 		{
-			add(new Address("1000 N 4th", "Fairfield", "IA", "52557"));
-			add(new Address("500 S. Washington", "Kansas City", "MI", "65434"));
+			add(new Address("1000 N 4th", "Fairfield", "IA", "52557"));		
 			add(new Address("213 W. Ave", "Seville", "Georgia", "41234"));
 			add(new Address("140 N. Baton", "Baton Rouge", "TX", "33556"));
 			add(new Address("200 Venice Dr.", "Los Angeles", "CA", "93736"));
-			add(new Address("135 New York Ave", "California", "CA", "94301"));
 			add(new Address("42 W 2nd ", "Fairfield", "IA", "52556"));
 			add(new Address("501 Mountain", "Mountain View", "CA", "94707"));
 		}
 	};
-	
+
 	@SuppressWarnings("serial")
 	public List<Author> authors = new ArrayList<Author>() {
 		{
-			add(new Author("Tom", "Thomas", "641123456", addresses.get(0), "Don’t think for a second that I actually care what you have to say."));
+			add(new Author("Tom", "Thomas", "641123456", addresses.get(0),
+					"Don’t think for a second that I actually care what you have to say."));
 			add(new Author("Peter", "Thomas", "6413334444", addresses.get(0), "Every storm runs out of rain."));
-			add(new Author("Maryam", "Pugh", "6412221111", addresses.get(1), "Have lots of hair and like ugly things."));
-			add(new Author("Andrew", "Cleveland", "9764452232", addresses.get(2), "I have this new theory that human adolescence doesn’t end until your early thirties."));
-			add(new Author("Sarah", "Connor", "1234222663", addresses.get(3), "I always feel sad for seedless watermelons, because what if they wanted babies?"));
+			add(new Author("Maryam", "Pugh", "6412221111", addresses.get(1),
+					"Have lots of hair and like ugly things."));
+			add(new Author("Andrew", "Cleveland", "9764452232", addresses.get(2),
+					"I have this new theory that human adolescence doesn’t end until your early thirties."));
+			add(new Author("Sarah", "Connor", "1234222663", addresses.get(3),
+					"I always feel sad for seedless watermelons, because what if they wanted babies?"));
 		}
-	};	
-	
+	};
+
 	@SuppressWarnings("serial")
 	List<Book> books = new ArrayList<Book>() {
 		{
-			add(new Book("2312345", "Java Progrming", 21, Arrays.asList(authors.get(0), authors.get(1))));
-			add(new Book("2812331", ".NET from begining", 7, Arrays.asList(authors.get(2))));
+			add(new Book("2312345", "Java Progrming", 7, Arrays.asList(authors.get(0), authors.get(1))));
+			add(new Book("2812331", ".NET from begining", 21, Arrays.asList(authors.get(2))));
 			add(new Book("4422223", "Thinking Java", 21, Arrays.asList(authors.get(3))));
 			add(new Book("4853455", "Business Administor", 7, Arrays.asList(authors.get(4))));
 		}
-	};	
-	
+	};
+
 	@SuppressWarnings("serial")
 	List<CheckoutRecordEntry> checkoutRecordEntries = new ArrayList<CheckoutRecordEntry>() {
 		{
-			add(new CheckoutRecordEntry(
-				books.get(0).getNextAvailableCopy(), LocalDate.of(2016, 1,21), LocalDate.of(2016,12,28)));
-			add(new CheckoutRecordEntry(
-				books.get(0).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,7,29)));
-			add(new CheckoutRecordEntry(
-				books.get(1).getNextAvailableCopy(), LocalDate.of(2016,1,22), LocalDate.of(2016,1,29)));
-			add(new CheckoutRecordEntry(
-				books.get(2).getNextAvailableCopy(), LocalDate.of(2016,1,20), LocalDate.of(2016,1,27)));			
+			// Java Progrming - Long
+			add(new CheckoutRecordEntry(books.get(0).getNextAvailableCopy(), LocalDate.of(2016, 1, 10),
+					LocalDate.of(2016, 1, 17)));
+			// Java Progrming - Achyut
+			add(new CheckoutRecordEntry(books.get(0).getNextAvailableCopy(), LocalDate.of(2016, 1, 11),
+					LocalDate.of(2016, 1, 18)));
+			// .NET from begining - Long
+			add(new CheckoutRecordEntry(books.get(1).getNextAvailableCopy(), LocalDate.of(2016, 1, 10),
+					LocalDate.of(2016, 1, 31)));
+			// Thinking Java - Amit
+			add(new CheckoutRecordEntry(books.get(2).getNextAvailableCopy(), LocalDate.of(2016, 1, 7),
+					LocalDate.of(2016, 1, 28)));
+			// Business Administor - Sarah
+			add(new CheckoutRecordEntry(books.get(3).getNextAvailableCopy(), LocalDate.of(2016, 1, 20),
+					LocalDate.of(2016, 1, 27)));
 		}
 	};
-	
+
 	List<User> users = new ArrayList<User>() {
 		{
 			add(new User("long", "Long Huynh", "123", Role.BOTH));
-			add(new User("achyut",  "AChyut", "123", Role.ADMIN));
+			add(new User("achyut", "AChyut", "123", Role.ADMIN));
 			add(new User("amit", "Amit", "123", Role.LIBRARIAN));
 		}
 	};
-	
+
 	@SuppressWarnings("serial")
 	List<CheckoutRecord> checkoutRecords = new ArrayList<CheckoutRecord>() {
 		{
-			add(new CheckoutRecord());
-			add(new CheckoutRecord());
 			add(new CheckoutRecord());
 			add(new CheckoutRecord());
 			add(new CheckoutRecord());
@@ -90,16 +97,16 @@ public class TestData {
 
 	public void generateUserData() {
 		UserRepository repository = new UserRepository();
-		repository.loadEntityMap(users);	
+		repository.loadEntityMap(users);
 	}
-	
+
 	public void generateBookData() {
 		books.get(0).addCopy();
 		books.get(0).addCopy();
 		books.get(2).addCopy();
 		books.get(2).addCopy();
 		BookRepository repository = new BookRepository();
-		repository.loadEntityMap(books);	
+		repository.loadEntityMap(books);
 	}
 
 	public void generateLibraryMemberData() {
@@ -107,31 +114,28 @@ public class TestData {
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
 		members.add(libraryMember);
-		
-		libraryMember = new LibraryMember("984976", "Achyut", "Devkota", "7029982414", addresses.get(5));
+
+		libraryMember = new LibraryMember("984976", "Achyut", "Devkota", "7029982414", addresses.get(1));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
+		members.add(libraryMember);
+
+		libraryMember = new LibraryMember("984992", "Amit", "Niroula", "4512348811", addresses.get(2));
 		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(2));
 		members.add(libraryMember);
-		
-		libraryMember = new LibraryMember("984992", "Amit", "Niroula", "4512348811", addresses.get(6));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(0));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
+
+		libraryMember = new LibraryMember("984990", "Sarah", "Obama", "4512348811", addresses.get(3));
+		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(4));
 		members.add(libraryMember);
-		
-		libraryMember = new LibraryMember("984990", "Sarah", "Obama", "4512348811", addresses.get(1));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(1));
-		libraryMember.addCheckoutEntry(checkoutRecordEntries.get(3));
-		members.add(libraryMember);
-		
+
 		MemberRepository repository = new MemberRepository();
-		repository.loadEntityMap(members);	
+		repository.loadEntityMap(members);
 	}
-	
+
 	public static void main(String[] args) {
 		TestData testData = new TestData();
 		System.out.println("Initialize data ...");
 		testData.generateBookData();
-		testData.generateLibraryMemberData();	
+		testData.generateLibraryMemberData();
 		testData.generateUserData();
 		System.out.println("Finish ...");
 	}
